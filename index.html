@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Modelo HUB — Le hub qui orchestre tous les outils du métier</title>
+<meta name="description" content="Modelo HUB · La plateforme métier du groupe Septeo. Flow, Brique, Action rapide, MIA, DataNova." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="site.css" />
+</head>
+<body>
+<noscript><div class="noscript">Cette présentation est interactive — activez JavaScript pour l'expérience complète.</div></noscript>
+
+<div class="progress" aria-hidden="true"><span class="progress__bar" id="progressBar"></span></div>
+
+<button class="theme-toggle" id="themeToggle" aria-label="Basculer thème clair / sombre">
+  <svg class="t-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+  <svg class="t-sun"  viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></g></svg>
+</button>
+
+<nav class="sidenav" aria-label="Chapitres">
+  <ol id="sideList">
+    <li><a href="#hero" data-step="01"><span>Hero</span></a></li>
+    <li><a href="#problem" data-step="02"><span>Le problème</span></a></li>
+    <li><a href="#vision" data-step="03"><span>La vision</span></a></li>
+    <li><a href="#brique" data-step="04"><span>La Brique</span></a></li>
+    <li><a href="#flow" data-step="05"><span>Le Flow</span></a></li>
+    <li><a href="#orchestration" data-step="06"><span>Templates</span></a></li>
+    <li><a href="#mia-gen" data-step="07"><span>MIA génère</span></a></li>
+    <li><a href="#interlude" data-step="08"><span>Stratégie</span></a></li>
+    <li><a href="#pieuvre" data-step="09"><span>Plateforme</span></a></li>
+    <li><a href="#usine" data-step="10"><span>L'usine M&amp;M</span></a></li>
+    <li><a href="#reseau" data-step="11"><span>Écosystème</span></a></li>
+    <li><a href="#conclusion" data-step="12"><span>Conclusion</span></a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ================== 1. HERO ================== -->
+<section id="hero" class="section section--hero">
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__nebula"></div>
+    <div class="hero__grid"></div>
+  </div>
+  <div class="container hero__inner">
+    <div class="hero__chips" data-reveal>
+      <span class="chip">Plateforme métier</span>
+      <span class="chip chip--ai">IA générative</span>
+      <span class="chip">Multi-verticaux</span>
+    </div>
+    <h1 class="hero__title" data-reveal>
+      Modelo&nbsp;<span class="ai-text">HUB</span>
+    </h1>
+    <p class="hero__sub" data-reveal>
+      Le hub qui orchestre tous les <span class="hi">outils du métier</span>.
+    </p>
+    <p class="hero__caption" data-reveal>Septeo · Présentation produit · 2026</p>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span></span></div>
+</section>
+
+<!-- ================== 2. PROBLÈME ================== -->
+<section id="problem" class="section">
+  <div class="container">
+    <p class="eyebrow" data-reveal>01 · Le constat</p>
+    <h2 class="h-display" data-reveal>Des outils <span class="hi">silotés</span>. <em>Des UX qui s'opposent.</em></h2>
+    <p class="lede" data-reveal>Une galaxie de logiciels métier accumulés au fil des acquisitions. Chacun avec son interface, sa logique, ses raccourcis. L'utilisateur paie en clics, en allers-retours et en charge mentale.</p>
+
+    <div class="silos" data-reveal>
+      <div class="silo silo--a"><div class="silo__chrome"></div><div class="silo__name">Cadastre</div></div>
+      <div class="silo silo--b"><div class="silo__chrome"></div><div class="silo__name">Modelo Legal</div></div>
+      <div class="silo silo--c"><div class="silo__chrome"></div><div class="silo__name">SPI Suite</div></div>
+      <div class="silo silo--d"><div class="silo__chrome"></div><div class="silo__name">Insight</div></div>
+      <div class="silo silo--e"><div class="silo__chrome"></div><div class="silo__name">Intouch</div></div>
+      <div class="silo silo--f"><div class="silo__chrome"></div><div class="silo__name">…et d'autres</div></div>
+    </div>
+
+    <p class="caption" data-reveal>Des univers parallèles. Aucune cohérence d'expérience.</p>
+  </div>
+</section>
+
+<!-- ================== 3. VISION ================== -->
+<section id="vision" class="section">
+  <div class="container">
+    <p class="eyebrow" data-reveal>02 · La vision</p>
+    <h2 class="h-display" data-reveal>Un seul <em>point d'entrée</em>.</h2>
+    <p class="lede" data-reveal>Une TopBar unique. Un bouton <span class="hi">+</span> qui donne accès à <span class="hi">toutes les briques métier</span> et <span class="hi">tous les flows en cours</span>. Plus jamais de zapping entre logiciels.</p>
+
+    <div class="vision-mock" data-reveal>
+      <!-- TopBar -->
+      <div class="topbar">
+        <div class="tm__logo">M</div>
+        <div class="tm__tabs">
+          <span class="tm__tab tm__tab--active"><i class="dot dot--flow"></i>Transaction · Rivoli</span>
+          <span class="tm__tab"><i class="dot dot--flow"></i>Gestion · Lyon</span>
+          <span class="tm__tab"><i class="dot dot--tool"></i>CRM</span>
+          <span class="tm__plus" id="tmPlus" aria-label="Nouvel onglet">+</span>
+        </div>
+        <div class="tm__search">
+          <span class="tm__search-icon">⌘K</span>
+          <span class="tm__search-text">Rechercher ou demander à <em>MIA</em>…</span>
+        </div>
+        <div class="tm__bell">🔔</div>
+        <div class="tm__avatar">PM</div>
+      </div>
+
+      <!-- Cursor (animated mouse pointer) -->
+      <span class="cursor-ghost" id="cursorGhost" aria-hidden="true">
+        <svg viewBox="0 0 22 22" width="22" height="22" aria-hidden="true">
+          <path d="M3 2.2 L3 17.6 L7.6 13.6 L10.4 19.6 L13.0 18.4 L10.2 12.4 L16.4 12.4 Z"
+                fill="#ffffff" stroke="#0b0d14" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+      </span>
+
+      <!-- Dropdown opens from + -->
+      <div class="plus-dropdown" id="plusDropdown" role="dialog" aria-label="Nouvel onglet">
+        <button class="pd__cta">
+          <span class="pd__cta-icon">＋</span>
+          <span><b>Créer un nouveau flow</b><small>Décrivez votre besoin, MIA s'occupe du reste</small></span>
+        </button>
+
+        <div class="pd__cols">
+          <div class="pd__col">
+            <span class="pd__title">Briques · ouverture libre</span>
+            <ul class="pd__list">
+              <li><span class="bk" style="--c: var(--b-prospection)"><span>P</span></span>Prospection</li>
+              <li><span class="bk" style="--c: var(--b-estimation)"><span>E</span></span>Estimation</li>
+              <li><span class="bk" style="--c: var(--b-transaction)"><span>T</span></span>Transaction</li>
+              <li><span class="bk" style="--c: var(--b-legal)"><span>L</span></span>Legal</li>
+              <li><span class="bk" style="--c: var(--b-crm)"><span>C</span></span>CRM</li>
+              <li><span class="bk" style="--c: var(--b-contact)"><span>C</span></span>Contact</li>
+              <li><span class="bk" style="--c: var(--b-gestion)"><span>G</span></span>Gestion</li>
+              <li><span class="bk" style="--c: var(--b-finance)"><span>F</span></span>Finance</li>
+            </ul>
+          </div>
+          <div class="pd__col">
+            <span class="pd__title">Flows récents</span>
+            <ul class="pd__list pd__list--grouped">
+              <li class="pd__group"><i class="dot" style="--c: var(--metier-immo)"></i>Immobilier<span class="pd__count">4</span></li>
+              <li><i class="pd__arrow" aria-hidden="true">→</i>Transaction · 24 rue de Rivoli<small>il y a 12 min</small></li>
+              <li><i class="pd__arrow" aria-hidden="true">→</i>Estimation · Villa Cap d'Antibes<small>il y a 1 h</small></li>
+              <li><i class="pd__arrow" aria-hidden="true">→</i>Gestion locative · Lyon Part-Dieu<small>il y a 2 j</small></li>
+              <li><i class="pd__arrow" aria-hidden="true">→</i>Location · 5 rue du Bac<small>la sem. dernière</small></li>
+            </ul>
+            <ul class="pd__list pd__list--grouped">
+              <li class="pd__group"><i class="dot" style="--c: var(--metier-notariat)"></i>Notariat<span class="pd__count">2</span></li>
+              <li><i class="pd__arrow" aria-hidden="true">→</i>Succession · Étude Bernard<small>hier</small></li>
+              <li><i class="pd__arrow" aria-hidden="true">→</i>Acte de vente · Bordeaux<small>il y a 8 j</small></li>
+            </ul>
+            <ul class="pd__list pd__list--grouped">
+              <li class="pd__group"><i class="dot" style="--c: var(--metier-rh)"></i>RH<span class="pd__count">2</span></li>
+              <li><i class="pd__arrow" aria-hidden="true">→</i>Recrutement CDI · Dev Senior<small>il y a 2 j</small></li>
+              <li><i class="pd__arrow" aria-hidden="true">→</i>Onboarding · Marie Dupont<small>il y a 10 j</small></li>
+            </ul>
+            <ul class="pd__list pd__list--grouped">
+              <li class="pd__group"><i class="dot" style="--c: var(--metier-juridique)"></i>Juridique<span class="pd__count">1</span></li>
+              <li><i class="pd__arrow" aria-hidden="true">→</i>Contentieux · Dossier Leclerc<small>il y a 3 j</small></li>
+            </ul>
+            <ul class="pd__list pd__list--grouped">
+              <li class="pd__group"><i class="dot" style="--c: var(--metier-compta)"></i>Comptabilité<span class="pd__count">1</span></li>
+              <li><i class="pd__arrow" aria-hidden="true">→</i>Clôture annuelle · Cabinet Morin<small>la sem. dernière</small></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="caption" data-reveal>Le hub s'efface — l'utilisateur travaille, pas l'outil.</p>
+  </div>
+</section>
+
+<!-- ================== 4. BRIQUE ================== -->
+<section id="brique" class="section">
+  <div class="container">
+    <p class="eyebrow" data-reveal>03 · Concept 1/2</p>
+    <h2 class="h-display" data-reveal>La <em>Brique</em>. Un <span class="hi">module métier autonome</span>.</h2>
+    <p class="lede" data-reveal>Chaque domaine du métier est encapsulé dans une brique : autonome, réutilisable, exposée par ses <span class="hi">actions rapides</span>.</p>
+
+    <div class="brick-grid" data-reveal>
+      <button class="brick"><span class="bk" style="--c: var(--b-prospection)"><span>P</span></span><span>Prospection</span></button>
+      <button class="brick"><span class="bk" style="--c: var(--b-estimation)"><span>E</span></span><span>Estimation</span></button>
+      <button class="brick"><span class="bk" style="--c: var(--b-transaction)"><span>T</span></span><span>Transaction</span></button>
+      <button class="brick"><span class="bk" style="--c: var(--b-legal)"><span>L</span></span><span>Legal</span></button>
+      <button class="brick"><span class="bk" style="--c: var(--b-crm)"><span>C</span></span><span>CRM</span></button>
+      <button class="brick"><span class="bk" style="--c: var(--b-contact)"><span>C</span></span><span>Contact</span></button>
+      <button class="brick"><span class="bk" style="--c: var(--b-gestion)"><span>G</span></span><span>Gestion</span></button>
+      <button class="brick"><span class="bk" style="--c: var(--b-syndic)"><span>S</span></span><span>Syndic</span></button>
+      <button class="brick"><span class="bk" style="--c: var(--b-finance)"><span>F</span></span><span>Finance</span></button>
+      <button class="brick"><span class="bk" style="--c: var(--b-ticket)"><span>T</span></span><span>Ticket</span></button>
+    </div>
+
+    <div class="modes">
+      <article class="mode" data-reveal>
+        <header class="mode__head">
+          <span class="tag">Mode 1</span>
+          <h3>Exploration libre</h3>
+        </header>
+        <p>La brique est <span class="hi">ouverte directement</span> depuis le HUB. Vue macro, KPIs, configuration, analytics — sans flow autour.</p>
+        <div class="mode__viz mode__viz--macro">
+          <div class="macro__head"><span class="bk bk--sm" style="--c: var(--b-crm)"><span>C</span></span><b>CRM</b><span class="macro__chip">Vue macro</span></div>
+          <div class="macro__kpis">
+            <div><b>1 248</b><span>contacts actifs</span></div>
+            <div><b>34</b><span>campagnes</span></div>
+            <div><b>+12 %</b><span>ce trimestre</span></div>
+          </div>
+          <div class="macro__chart" style="--c: var(--b-crm)"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="macro__tags">
+            <span>Configuration</span><span>Analytics</span><span>Exploration libre</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="mode" data-reveal>
+        <header class="mode__head">
+          <span class="tag tag--flow">Mode 2</span>
+          <h3>Convoquée par un Flow</h3>
+        </header>
+        <p>La même brique, appelée <span class="hi">au bon moment</span> dans un flow. On en utilise <span class="hi">une seule action rapide</span> — sans jamais entrer dans la brique.</p>
+        <div class="mode__viz mode__viz--cockpit">
+          <div class="cockpit__head"><span class="dot dot--flow"></span><b>Flow Transaction · Rivoli</b></div>
+
+          <ol class="mini-timeline">
+            <li class="mt-done"><span class="mt-num">1</span><span>Prospection</span></li>
+            <li class="mt-active"><span class="mt-num">2</span><span>Estimation</span></li>
+            <li><span class="mt-num">3</span><span>Mandat</span></li>
+            <li><span class="mt-num">4</span><span>Comm.</span></li>
+            <li><span class="mt-num">5</span><span>Offres</span></li>
+            <li><span class="mt-num">6</span><span>Signature</span></li>
+          </ol>
+
+          <p class="cockpit__hint">Étape active · <b>Estimation</b> — 3 actions rapides proposées :</p>
+
+          <ul class="cockpit__qa">
+            <li>
+              <span class="bk bk--sm" style="--c: var(--b-estimation)"><span>E</span></span>
+              <span class="qa-name">Créer un Avis de Valeur</span>
+              <span class="qa-from">brique <b>Estimation</b></span>
+            </li>
+            <li>
+              <span class="bk bk--sm" style="--c: var(--b-estimation)"><span>E</span></span>
+              <span class="qa-name">Analyser les biens similaires</span>
+              <span class="qa-from">brique <b>Estimation</b></span>
+            </li>
+            <li>
+              <span class="bk bk--sm" style="--c: var(--b-crm)"><span>C</span></span>
+              <span class="qa-name">Envoyer l'estimation au propriétaire</span>
+              <span class="qa-from">brique <b>CRM</b></span>
+            </li>
+          </ul>
+        </div>
+      </article>
+    </div>
+
+    <p class="punchline" data-reveal>Une brique, deux usages. <em>Pour piloter à haut niveau, ou pour exécuter au bon moment.</em></p>
+
+    <ul class="bullets" data-reveal>
+      <li>Autonome</li>
+      <li>Réutilisable cross-métiers</li>
+      <li>Composable</li>
+      <li>Exposée via actions rapides</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================== 5. FLOW ================== -->
+<section id="flow" class="section section--full">
+  <div class="container">
+    <p class="eyebrow" data-reveal>04 · Concept 2/2</p>
+    <h2 class="h-display" data-reveal>Le <em>Flow</em>. Un <span class="hi">parcours métier orchestré</span>.</h2>
+    <p class="lede" data-reveal>Un flow porte sa temporalité, ses étapes, ses participants. À chaque étape, il convoque les <span class="hi">bonnes actions rapides</span> issues de plusieurs briques différentes.</p>
+
+    <article class="flow-card" data-reveal>
+      <header>
+        <span class="dot dot--flow"></span>
+        <b>Flow Transaction · 24 rue de Rivoli</b>
+        <span class="pill pill--orange">En cours</span>
+        <span class="flow-card__meta">Maj. il y a 12 min · 4 participants</span>
+      </header>
+    </article>
+  </div>
+
+  <!-- Full-width timeline -->
+  <div class="flow-wide" data-reveal data-pause-on-hover id="flowWide">
+    <div class="flow-wide__inner">
+      <div class="flow-line" id="flowLine" aria-hidden="true"><span class="flow-line__fill" id="flowLineFill"></span></div>
+      <ol class="flow-wide__steps" id="flowWideSteps">
+        <!-- step template, populated below as static markup -->
+        <li>
+          <div class="step__head">
+            <span class="step__num">1</span>
+            <span class="step__name">Prospection</span>
+          </div>
+          <ul class="step__qas">
+            <li><span class="bk bk--xs" style="--c: var(--b-prospection)"><span>P</span></span><b>Rechercher des biens</b><small>Prospection</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-prospection)"><span>P</span></span><b>Identifier propriétaires</b><small>Prospection</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-contact)"><span>C</span></span><b>Ajouter un contact</b><small>Contact</small></li>
+          </ul>
+        </li>
+        <li>
+          <div class="step__head">
+            <span class="step__num">2</span>
+            <span class="step__name">Estimation</span>
+          </div>
+          <ul class="step__qas">
+            <li><span class="bk bk--xs" style="--c: var(--b-estimation)"><span>E</span></span><b>Créer un Avis de Valeur</b><small>Estimation</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-estimation)"><span>E</span></span><b>Analyser les biens similaires</b><small>Estimation</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-crm)"><span>C</span></span><b>Envoyer au propriétaire</b><small>CRM</small></li>
+          </ul>
+        </li>
+        <li>
+          <div class="step__head">
+            <span class="step__num">3</span>
+            <span class="step__name">Mandat</span>
+          </div>
+          <ul class="step__qas">
+            <li><span class="bk bk--xs" style="--c: var(--b-legal)"><span>L</span></span><b>Générer le mandat</b><small>Legal</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-crm)"><span>C</span></span><b>Envoyer en signature</b><small>CRM</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-contact)"><span>C</span></span><b>Associer un vendeur</b><small>Contact</small></li>
+          </ul>
+        </li>
+        <li>
+          <div class="step__head">
+            <span class="step__num">4</span>
+            <span class="step__name">Commercialisation</span>
+          </div>
+          <ul class="step__qas">
+            <li><span class="bk bk--xs" style="--c: var(--b-transaction)"><span>T</span></span><b>Créer une annonce</b><small>Transaction</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-crm)"><span>C</span></span><b>Diffuser sur les portails</b><small>CRM</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-crm)"><span>C</span></span><b>Gérer les demandes</b><small>CRM</small></li>
+          </ul>
+        </li>
+        <li>
+          <div class="step__head">
+            <span class="step__num">5</span>
+            <span class="step__name">Offres</span>
+          </div>
+          <ul class="step__qas">
+            <li><span class="bk bk--xs" style="--c: var(--b-transaction)"><span>T</span></span><b>Planifier une visite</b><small>Transaction</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-transaction)"><span>T</span></span><b>Comparer les offres</b><small>Transaction</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-crm)"><span>C</span></span><b>Négocier</b><small>CRM</small></li>
+          </ul>
+        </li>
+        <li>
+          <div class="step__head">
+            <span class="step__num">6</span>
+            <span class="step__name">Signature</span>
+          </div>
+          <ul class="step__qas">
+            <li><span class="bk bk--xs" style="--c: var(--b-legal)"><span>L</span></span><b>Générer le compromis</b><small>Legal</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-crm)"><span>C</span></span><b>Envoyer aux parties</b><small>CRM</small></li>
+            <li><span class="bk bk--xs" style="--c: var(--b-finance)"><span>F</span></span><b>Enregistrer les honoraires</b><small>Finance</small></li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="container">
+    <p class="punchline" data-reveal>À chaque étape, les bonnes briques. Au bon moment. <em>Sans jamais quitter le flow.</em></p>
+
+    <ul class="bullets" data-reveal>
+      <li>Suivi temporel</li>
+      <li>Parcours métier structuré</li>
+      <li>Orchestre les briques</li>
+      <li>Aucune navigation manuelle</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================== 6. ORCHESTRATION (Templates) ================== -->
+<section id="orchestration" class="section">
+  <div class="container">
+    <p class="eyebrow" data-reveal>05 · L'extensibilité</p>
+    <h2 class="h-display" data-reveal>Un <span class="hi">template de flow</span> par besoin métier.</h2>
+    <p class="lede" data-reveal>Chaque métier compose ses templates à partir des briques disponibles. <span class="hi">Le moteur est métier-agnostique</span> — un même socle absorbe immobilier, notariat, RH, syndic, promotion, et plus encore.</p>
+  </div>
+
+  <div class="tpl-marquee" data-reveal id="tplMarquee">
+    <div class="tpl-marquee__track" id="tplTrack">
+      <!-- groups duplicated by JS for seamless loop -->
+    </div>
+  </div>
+
+  </section>
+
+<!-- ================== 7. MIA GÉNÈRE ================== -->
+<section id="mia-gen" class="section section--dense">
+  <div class="container">
+    <p class="eyebrow" data-reveal>06 · L'intention devient exécution</p>
+    <h2 class="h-display" data-reveal>MIA <em>génère un flow</em>.</h2>
+    <p class="lede" data-reveal>Un prompt en langage naturel. Un <span class="hi">template inédit</span>, prêt à être validé. De l'intention à l'exécution — <span class="hi">sans configuration</span>.</p>
+
+    <div class="genstage" data-reveal data-pause-on-hover id="genStage">
+      <!-- Acte 1 : prompt -->
+      <div class="gen-prompt">
+        <span class="mia-prompt__sparkle"></span>
+        <span class="gen-prompt__text" id="genTyper"></span><span class="gen-caret">▍</span>
+        <span class="gen-prompt__enter" id="genEnter">⏎</span>
+      </div>
+
+      <!-- Acte 2 : loader -->
+      <div class="gen-loader" id="genLoader">
+        <div class="lego">
+          <div class="lego__brick"></div>
+          <div class="lego__brick"></div>
+          <div class="lego__brick"></div>
+          <div class="lego__brick"></div>
+        </div>
+        <span class="ai-text-shimmer">MIA construit votre flow…</span>
+      </div>
+
+      <!-- Acte 3 : timeline horizontale (scrollée) -->
+      <div class="gen-timeline-wrap" id="genTimelineWrap">
+        <div class="gen-fade gen-fade--l" aria-hidden="true"></div>
+        <div class="gen-fade gen-fade--r" aria-hidden="true"></div>
+        <div class="gen-line" id="genLine" aria-hidden="true"><span class="gen-line__fill"></span></div>
+        <ol class="gen-timeline" id="genTimeline" aria-label="Timeline générée"></ol>
+      </div>
+
+      <!-- Acte 4 : validation -->
+      <div class="gen-validate" id="genValidate">
+        <div class="mia-bubble">
+          <span class="mia-bubble__avatar">M</span>
+          <p>J'ai assemblé un flow <span class="hi">Bail commercial</span> en <b>5 étapes</b> mobilisant <b>5 briques</b>. On le crée ?</p>
+          <div class="mia-bubble__actions">
+            <button class="btn btn--ai" id="genValidateBtn">✓ Valider et créer</button>
+            <button class="btn btn--ghost">Modifier</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Curseur de souris animé -->
+      <span class="gen-cursor" id="genCursor" aria-hidden="true">
+        <svg width="22" height="24" viewBox="0 0 22 24" fill="none">
+          <path d="M2 1.5 L2 19 L7 14.5 L10 22 L13.5 20.5 L10.5 13 L17 13 Z"
+                fill="white" stroke="black" stroke-width="1.4" stroke-linejoin="round"/>
+        </svg>
+      </span>
+
+      <!-- Explosion IA -->
+      <div class="gen-burst" id="genBurst" aria-hidden="true">
+        <span class="burst-ring"></span>
+        <span class="burst-ring burst-ring--2"></span>
+        <span class="burst-core"></span>
+        <span class="burst-ray r1"></span><span class="burst-ray r2"></span>
+        <span class="burst-ray r3"></span><span class="burst-ray r4"></span>
+        <span class="burst-ray r5"></span><span class="burst-ray r6"></span>
+        <span class="burst-ray r7"></span><span class="burst-ray r8"></span>
+      </div>
+
+      <div class="gen-flash" id="genFlash" aria-hidden="true"></div>
+    </div>
+
+    <p class="punchline" data-reveal>De l'intention à l'exécution — <em>sans configuration</em>.</p>
+  </div>
+</section>
+
+<!-- ================== 8. INTERLUDE ================== -->
+<section id="interlude" class="section section--interlude">
+  <div class="container container--center">
+    <h2 class="h-mega" data-reveal>Comment ça <em>scale</em>.</h2>
+    <p class="lede lede--big" data-reveal>Le HUB n'est pas un produit immobilier. C'est <span class="hi">un socle</span> capable d'absorber tous les métiers du groupe — et de les rendre tous meilleurs ensemble.</p>
+  </div>
+</section>
+
+<!-- ================== 9. PLATEFORME — multi-métiers ================== -->
+<section id="pieuvre" class="section">
+  <div class="container">
+    <p class="eyebrow" data-reveal>Levier 1</p>
+    <h2 class="h-display" data-reveal>Une plateforme.<br><em>Tous les métiers.</em></h2>
+    <p class="lede" data-reveal>Le moteur du HUB est <span class="hi">métier-agnostique</span>. Flow, Brique, Action rapide : le même socle absorbe tous les <span class="hi">métiers du groupe</span>.</p>
+
+    <div class="pieuvre" data-reveal>
+      <div class="pieuvre__core"><span>HUB</span></div>
+      <span class="pieuvre__arm pieuvre__arm--1" style="--c: var(--metier-immo)"><i class="metier-dot"></i><b>Immobilier</b><i class="arm-sub">Transaction · Gestion · Syndic</i></span>
+      <span class="pieuvre__arm pieuvre__arm--2" style="--c: var(--metier-notariat)"><i class="metier-dot"></i><b>Notariat</b><i class="arm-sub">Successions · Actes</i></span>
+      <span class="pieuvre__arm pieuvre__arm--3" style="--c: var(--metier-rh)"><i class="metier-dot"></i><b>RH</b><i class="arm-sub">Recrutement · Paie</i></span>
+      <span class="pieuvre__arm pieuvre__arm--4" style="--c: var(--metier-juridique)"><i class="metier-dot"></i><b>Juridique</b><i class="arm-sub">Contentieux · Compliance</i></span>
+      <span class="pieuvre__arm pieuvre__arm--5" style="--c: var(--metier-compta)"><i class="metier-dot"></i><b>Comptabilité</b><i class="arm-sub">Cabinets · TPE/PME</i></span>
+      <span class="pieuvre__arm pieuvre__arm--6" style="--c: var(--metier-sante)"><i class="metier-dot"></i><b>Santé</b><i class="arm-sub">Cliniques · Officines</i></span>
+      <span class="pieuvre__arm pieuvre__arm--7" style="--c: var(--metier-btp)"><i class="metier-dot"></i><b>BTP</b><i class="arm-sub">Chantiers · Marchés</i></span>
+      <span class="pieuvre__arm pieuvre__arm--8" style="--c: var(--metier-public)"><i class="metier-dot"></i><b>Public</b><i class="arm-sub">Collectivités</i></span>
+    </div>
+  </div>
+</section>
+
+<!-- ================== 10. USINE M&M ================== -->
+<section id="usine" class="section">
+  <div class="container">
+    <p class="eyebrow" data-reveal>Levier 2</p>
+    <h2 class="h-display" data-reveal>L'usine <em>M&amp;M</em>. <span class="hi">Du logiciel racheté</span> à la brique native.</h2>
+    <p class="lede" data-reveal>Un pipeline industriel transforme chaque logiciel acquis en brique du HUB. <span class="hi">DataNova</span> — le moteur data/IA du groupe — est le pivot.</p>
+
+    <div class="usine" data-reveal id="usineStage">
+      <ol class="usine__steps" id="usineSteps">
+        <li data-step="1" class="us-active">
+          <span class="us__num">01</span>
+          <span class="us__name">Acquisition</span>
+          <span class="us__sub">Logiciel racheté</span>
+        </li>
+        <li data-step="2">
+          <span class="us__num">02</span>
+          <span class="us__name">Audit</span>
+          <span class="us__sub">Cartographie</span>
+        </li>
+        <li data-step="3">
+          <span class="us__num">03</span>
+          <span class="us__name">Encapsulation</span>
+          <span class="us__sub">API + MCP</span>
+        </li>
+        <li data-step="4">
+          <span class="us__num">04</span>
+          <span class="us__name">DataNova</span>
+          <span class="us__sub">Apprend &amp; enrichit</span>
+        </li>
+        <li data-step="5">
+          <span class="us__num">05</span>
+          <span class="us__name">Intégration</span>
+          <span class="us__sub">Brique HUB</span>
+        </li>
+        <li data-step="6">
+          <span class="us__num">06</span>
+          <span class="us__name">Actions rapides</span>
+          <span class="us__sub">Cross-flows</span>
+        </li>
+      </ol>
+
+      <div class="usine__panels">
+        <article class="us-panel is-show" data-panel="1">
+          <div class="us-panel__viz us-viz--acq">
+            <div class="acq__editor"><span>Logiciel de syndic</span><small>indépendant, racheté</small></div>
+            <div class="acq__arrow">↘</div>
+            <div class="acq__septeo"><span>Septeo</span></div>
+          </div>
+          <p>Septeo rachète des <span class="hi">logiciels métier</span> spécialisés — ici un logiciel de gestion de copropriété. Chacun apporte un <span class="hi">savoir-faire</span>, mais aussi sa propre interface, ses données, ses utilisateurs.</p>
+        </article>
+
+        <article class="us-panel" data-panel="2">
+          <div class="us-panel__viz us-viz--audit">
+            <div class="audit__layer"><span>Modèles de données</span></div>
+            <div class="audit__layer"><span>Liste exhaustive des fonctionnalités</span></div>
+            <div class="audit__layer"><span>Flows imaginables</span></div>
+          </div>
+          <p>Cartographie exhaustive du logiciel de syndic : <span class="hi">modèles de données</span>, <span class="hi">fonctionnalités</span>, <span class="hi">flows imaginables</span>. On identifie ce qui devient brique, action rapide, ou template.</p>
+        </article>
+
+        <article class="us-panel" data-panel="3">
+          <div class="us-panel__viz us-viz--encaps">
+            <div class="enc__legacy">Legacy syndic</div>
+            <div class="enc__shell"></div>
+            <div class="enc__api">API + MCP</div>
+          </div>
+          <p>Le logiciel legacy reste, mais il est <span class="hi">encapsulé</span> derrière une API uniforme et des <span class="hi">adapters MCP</span>. La brique parle <span class="hi">la langue du HUB</span>.</p>
+        </article>
+
+        <article class="us-panel" data-panel="4">
+          <div class="us-panel__viz us-viz--dn">
+            <div class="dn__nebula"></div>
+            <div class="dn__core"><span>DataNova</span></div>
+            <div class="dn__flow dn__flow--in"  aria-hidden="true"></div>
+            <div class="dn__flow dn__flow--out" aria-hidden="true"></div>
+            <span class="dn__label dn__label--in">Syndic → DataNova<small>nouvelles données</small></span>
+            <span class="dn__label dn__label--out">DataNova → toutes les briques<small>enrichissement</small></span>
+          </div>
+          <p class="us-panel__big">Plus il y a de <span class="hi">briques qui rentrent</span>, plus DataNova devient riche. <em>Plus DataNova est riche, plus chaque brique devient puissante.</em></p>
+        </article>
+
+        <article class="us-panel" data-panel="5">
+          <div class="us-panel__viz us-viz--integ">
+            <div class="integ__brick"><span class="bk" style="--c: var(--b-syndic)"><span>S</span></span></div>
+            <div class="integ__hub"><span>HUB</span></div>
+          </div>
+          <p>La brique <span class="hi">Syndic</span> est désormais <span class="hi">native dans le HUB</span>. Mêmes tokens, même DS, mêmes patterns. L'utilisateur ne voit pas la couture.</p>
+        </article>
+
+        <article class="us-panel" data-panel="6">
+          <div class="us-panel__viz us-viz--qas">
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Convoquer une AG</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Envoyer les convocations</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Générer le PV d'AG</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Calculer les charges</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Émettre les appels de fonds</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Suivre les impayés</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Créer un ordre du jour</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Valider un devis travaux</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Enregistrer un sinistre</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Mettre à jour le règlement</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Archiver les comptes</span>
+            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Notifier les copropriétaires</span>
+          </div>
+          <p>Toutes les actions rapides exposées par la brique <span class="hi">Syndic</span> deviennent <span class="hi">composables</span> dans n'importe quel template de flow — y compris ceux à venir.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== 11. EFFET RÉSEAU ================== -->
+<section id="reseau" class="section">
+  <div class="container">
+    <p class="eyebrow" data-reveal>Levier 3</p>
+    <h2 class="h-display" data-reveal>Un <em>écosystème</em>, pas un produit.</h2>
+    <p class="lede" data-reveal>Chaque nouvelle brique rejoint l'écosystème — et <span class="hi">tous les flows</span> peuvent immédiatement convoquer ses actions rapides. Les nouvelles arrivées <span class="hi">brillent plus fort</span> autour du flow.</p>
+
+    <div class="network" data-reveal id="network">
+      <!-- Brique icons orbiting around the central flow -->
+      <div class="net__halo" id="netHalo" aria-hidden="true"></div>
+
+      <!-- Central skeleton flow card -->
+      <div class="net__flow">
+        <div class="net__flow-head">
+          <span class="dot dot--flow"></span>
+          <span class="sk sk--head"></span>
+        </div>
+        <div class="net__flow-meta">
+          <span class="sk sk--chip"></span>
+          <span class="sk sk--chip"></span>
+        </div>
+        <div class="net__flow-steps">
+          <span class="sk sk--step"></span>
+          <span class="sk sk--step"></span>
+          <span class="sk sk--step"></span>
+          <span class="sk sk--step"></span>
+        </div>
+        <div class="net__flow-qas">
+          <span class="sk sk--qa"></span>
+          <span class="sk sk--qa"></span>
+          <span class="sk sk--qa"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== 12. CONCLUSION ================== -->
+<section id="conclusion" class="section section--final">
+  <div class="container container--center">
+    <h2 class="h-mega" data-reveal>Le métier <em>prend la main</em>.</h2>
+    <p class="lede lede--big" data-reveal>Septeo devient une <span class="hi">plateforme métier</span>.</p>
+    <p class="footer-line" data-reveal>Modelo HUB · Septeo · 2026</p>
+  </div>
+</section>
+
+</main>
+
+<button class="back-top" id="backTop" aria-label="Retour en haut">↑</button>
+
+<script src="site.js" defer></script>
+</body>
+</html>
