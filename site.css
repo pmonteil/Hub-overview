@@ -2093,26 +2093,83 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
   width: 1.5px;
 }
 
-/* Carte flow centrale en mode skeleton */
+/* Carte flow centrale en mode skeleton — doit clairement se lire comme un FLOW à étapes */
 .net__flow {
   position: relative;
-  width: 240px;
+  width: 300px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   padding: var(--sp-lg);
   box-shadow: var(--shadow-card);
   z-index: 2;
-  display: flex; flex-direction: column; gap: 10px;
+  display: flex; flex-direction: column; gap: var(--sp-md);
 }
 .net__flow-head {
   display: flex; align-items: center; gap: 8px;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--border);
 }
-.net__flow-meta { display: flex; gap: 6px; }
-.net__flow-steps { display: flex; gap: 6px; }
 .net__flow-qas { display: flex; flex-direction: column; gap: 6px; }
+
+/* Stepper skeleton — numéros + connecteurs, reproduit le langage visuel des autres steppers */
+.net__stepper {
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+  padding: 4px 0 6px;
+}
+.net__stepper::before {
+  /* Ligne de connecteur en arrière-plan, du centre du step 1 au centre du step 4 */
+  content: '';
+  position: absolute;
+  top: calc(4px + 11px); /* aligne sur le centre des cercles 22px */
+  left: 12.5%;  /* center of col 1 = 1/(4*2) */
+  right: 12.5%; /* center of col 4 */
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.net__step {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+.net__step-num {
+  width: 22px; height: 22px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  color: var(--text-3);
+  font-family: var(--f-mono);
+  font-size: 10px;
+  font-weight: 600;
+}
+.net__step.is-done .net__step-num {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+.net__step.is-active .net__step-num {
+  background: var(--surface);
+  border-color: var(--orange);
+  color: var(--orange);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--orange) 25%, transparent);
+}
+/* Connecteur done : segment orange qui couvre 1→2 (et 2→3 si needed) */
+.net__step.is-done + .net__step::before {
+  content: '';
+  position: absolute;
+  top: 11px;
+  right: 50%; left: -50%;
+  height: 2px;
+  background: var(--orange);
+  z-index: -1;
+}
 
 .sk {
   display: block;
@@ -2124,13 +2181,13 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
   animation: skShimmer 1.8s linear infinite;
   border-radius: 4px;
 }
-.sk--head { height: 12px; flex: 1; }
-.sk--chip { height: 14px; width: 56px; border-radius: var(--r-full); }
-.sk--step { height: 10px; flex: 1; }
-.sk--qa   { height: 10px; }
+.sk--title { height: 10px; flex: 1; }
+.sk--pill  { height: 14px; width: 44px; border-radius: var(--r-full); }
+.sk--label { height: 6px; width: 70%; border-radius: 2px; }
+.sk--qa    { height: 10px; }
 .sk--qa:nth-child(1) { width: 92%; }
-.sk--qa:nth-child(2) { width: 78%; }
-.sk--qa:nth-child(3) { width: 86%; }
+.sk--qa:nth-child(2) { width: 76%; }
+
 @keyframes skShimmer {
   0%   { background-position: 100% 0; }
   100% { background-position: -100% 0; }
@@ -2138,7 +2195,7 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
 
 @media (max-width: 760px) {
   .net__halo .bk { --r: 200px !important; }
-  .net__flow { width: 200px; }
+  .net__flow { width: 240px; }
 }
 
 /* ============================================================
@@ -2488,8 +2545,7 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
   .net__halo .bk { --r: 170px !important; }
   .net__halo .bk.is-new::after { font-size: 7px; padding: 1.5px 4px; }
   .net__spoke { --r: 170px !important; height: calc(170px - 18px) !important; }
-  .net__flow { width: 180px; padding: var(--sp-md); }
-  .net__flow-steps { flex-wrap: wrap; }
+  .net__flow { width: 220px; padding: var(--sp-md); }
 
   /* ---------- §11b Catalogue d'actions ---------- */
   .qa-card { width: 260px; padding: var(--sp-lg) var(--sp-md) var(--sp-md); }
@@ -2521,7 +2577,7 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
   .lede { font-size: 15px; }
   .brick-grid { grid-template-columns: 1fr; }
   .bullets { grid-template-columns: 1fr; }
-  .net__flow { width: 160px; }
+  .net__flow { width: 200px; }
   .net__halo .bk { --r: 150px !important; }
   .net__spoke { --r: 150px !important; height: calc(150px - 18px) !important; }
 }

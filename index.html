@@ -219,7 +219,7 @@
           <span class="tag tag--flow">Mode 2</span>
           <h3>Convoquée par un Flow</h3>
         </header>
-        <p>La même brique, appelée <span class="hi">au bon moment</span> dans un flow. On en utilise <span class="hi">une seule action rapide</span> — sans jamais entrer dans la brique.</p>
+        <p>Les <span class="hi">actions rapides</span> de la brique sont <span class="hi">disponibles directement dans le flow</span>, à l'étape où elles sont utiles. L'utilisateur déclenche l'action sans jamais sortir du flow ni ouvrir la brique.</p>
         <div class="mode__viz mode__viz--cockpit">
           <div class="cockpit__head"><span class="dot dot--flow"></span><b>Flow Transaction · Rivoli</b></div>
 
@@ -610,24 +610,36 @@
       <!-- Brique icons orbiting around the central flow -->
       <div class="net__halo" id="netHalo" aria-hidden="true"></div>
 
-      <!-- Central skeleton flow card -->
+      <!-- Central skeleton flow card — clairement un Flow avec ses étapes -->
       <div class="net__flow">
         <div class="net__flow-head">
           <span class="dot dot--flow"></span>
-          <span class="sk sk--head"></span>
+          <span class="sk sk--title"></span>
+          <span class="sk sk--pill"></span>
         </div>
-        <div class="net__flow-meta">
-          <span class="sk sk--chip"></span>
-          <span class="sk sk--chip"></span>
-        </div>
-        <div class="net__flow-steps">
-          <span class="sk sk--step"></span>
-          <span class="sk sk--step"></span>
-          <span class="sk sk--step"></span>
-          <span class="sk sk--step"></span>
-        </div>
+
+        <!-- Stepper visible : 4 étapes numérotées reliées par une ligne -->
+        <ol class="net__stepper" aria-label="Étapes du flow (skeleton)">
+          <li class="net__step is-done">
+            <span class="net__step-num">1</span>
+            <span class="sk sk--label"></span>
+          </li>
+          <li class="net__step is-active">
+            <span class="net__step-num">2</span>
+            <span class="sk sk--label"></span>
+          </li>
+          <li class="net__step">
+            <span class="net__step-num">3</span>
+            <span class="sk sk--label"></span>
+          </li>
+          <li class="net__step">
+            <span class="net__step-num">4</span>
+            <span class="sk sk--label"></span>
+          </li>
+        </ol>
+
+        <!-- Quick actions de l'étape active (skeleton) -->
         <div class="net__flow-qas">
-          <span class="sk sk--qa"></span>
           <span class="sk sk--qa"></span>
           <span class="sk sk--qa"></span>
         </div>
