@@ -71,7 +71,7 @@
   };
 
   /* =================================================================
-     §03 VISION — TopBar + cursor → "+" → dropdown loop
+     §03 VISION — TopBar + cursor → "+" → dropdown (joue une fois, reste ouvert)
      ================================================================= */
   (() => {
     const stage    = $('.vision-mock');
@@ -80,16 +80,12 @@
     const dropdown = $('#plusDropdown');
     if (!stage || !cursor || !plusBtn || !dropdown) return;
 
-    let timer = null, paused = false, running = false;
-    const sleep = (ms) => new Promise(r => { timer = setTimeout(r, ms); });
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-    const moveCursor = (x, y) => {
-      cursor.style.transform = `translate(${x}px, ${y}px)`;
-    };
-
-    // SVG arrow tip sits at (3, 2). We translate the cursor element so the tip
-    // ends up exactly on the target point.
+    // Le tip du SVG est à (3, 2) → on translate le wrapper pour aligner la pointe sur la cible.
     const TIP_X = 3, TIP_Y = 2;
+    const moveCursor = (x, y) => { cursor.style.transform = `translate(${x}px, ${y}px)`; };
+
     const placeAtPlus = () => {
       const sb = stage.getBoundingClientRect();
       const pb = plusBtn.getBoundingClientRect();
@@ -105,41 +101,52 @@
       cursor.classList.add('is-show');
     };
 
-    const loop = async () => {
-      if (running) return;
-      running = true;
-      while (!paused) {
-        dropdown.classList.remove('is-open');
-        plusBtn.classList.remove('is-hover');
-        startCursor();
-        await sleep(900);
+    let played = false;
+    const playOnce = async () => {
+      if (played) return;
+      played = true;
 
-        const target = placeAtPlus();
-        cursor.classList.add('is-glide');
-        moveCursor(target.x, target.y);
-        await sleep(1100);
-        cursor.classList.remove('is-glide');
+      dropdown.classList.remove('is-open');
+      plusBtn.classList.remove('is-hover');
+      startCursor();
+      await sleep(700);
 
-        plusBtn.classList.add('is-hover');
-        await sleep(280);
-        cursor.classList.add('is-click');
-        await sleep(180);
-        cursor.classList.remove('is-click');
+      const target = placeAtPlus();
+      cursor.classList.add('is-glide');
+      moveCursor(target.x, target.y);
+      await sleep(1100);
+      cursor.classList.remove('is-glide');
 
-        dropdown.classList.add('is-open');
-        await sleep(4400);
+      plusBtn.classList.add('is-hover');
+      await sleep(260);
+      cursor.classList.add('is-click');
+      await sleep(180);
+      cursor.classList.remove('is-click');
 
-        cursor.classList.remove('is-show');
-        plusBtn.classList.remove('is-hover');
-        dropdown.classList.remove('is-open');
-        await sleep(900);
-      }
-      running = false;
+      dropdown.classList.add('is-open');
+      // État final : dropdown ouvert, curseur sur le +. On reste ainsi.
     };
 
-    runWhenVisible(stage, () => { if (!prefersReduced) loop(); }, { threshold: 0.3 });
-    stage.addEventListener('mouseenter', () => { paused = true; clearTimeout(timer); });
-    stage.addEventListener('mouseleave', () => { paused = false; if (!prefersReduced) loop(); });
+    if (prefersReduced) {
+      // Mode reduced motion : on force directement l'état final, sans curseur.
+      dropdown.classList.add('is-open');
+      return;
+    }
+
+    // Trigger principal : IntersectionObserver à seuil bas pour fiabiliser.
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { playOnce(); obs.disconnect(); }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -10% 0px' });
+    obs.observe(stage);
+
+    // Fallback : si la section est déjà visible au chargement, on déclenche aussi.
+    requestAnimationFrame(() => {
+      const r = stage.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      if (r.top < vh * 0.9 && r.bottom > 0) playOnce();
+    });
   })();
 
   /* =================================================================
@@ -420,9 +427,11 @@
         timeline.appendChild(li);
         requestAnimationFrame(() => li.classList.add('is-in'));
         if (lineFillEl) lineFillEl.style.width = ((i + 1) / FLOW.length * 100) + '%';
-        // smooth scroll to keep latest step in view
+        // Scroll uniquement la timeline horizontalement — JAMAIS la fenêtre.
+        // (scrollIntoView remontait la page à chaque étape et empêchait l'utilisateur de descendre.)
         await sleep(60);
-        li.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        const targetLeft = li.offsetLeft - (timeline.clientWidth - li.offsetWidth) / 2;
+        timeline.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
         await sleep(1100);
       }
 
@@ -537,6 +546,184 @@
       el.innerHTML = `<span>${b.letter}</span>`;
       halo.appendChild(el);
     });
+  })();
+
+  /* =================================================================
+     §11b CATALOGUE — chaque brique avec son catalogue d'actions rapides
+     Marquee infini droite → gauche.
+     ================================================================= */
+  (() => {
+    const track = $('#qaMarqueeTrack');
+    if (!track) return;
+
+    const CATALOG = [
+      { name: 'Prospection', letter: 'P', brique: 'prospection', total: 73, qas: [
+        'Rechercher des biens',
+        'Identifier les propriétaires',
+        'Créer un lead',
+        'Importer une liste',
+        'Géolocaliser un secteur',
+        'Détecter les biens off-market',
+        'Générer un mailing prospect',
+        'Qualifier un prospect',
+        'Suivre les relances',
+        'Analyser la concurrence'
+      ]},
+      { name: 'Estimation', letter: 'E', brique: 'estimation', total: 91, qas: [
+        'Créer un avis de valeur',
+        'Comparer biens similaires',
+        'Analyser le marché local',
+        'Générer un rapport PDF',
+        'Importer données cadastrales',
+        'Calculer la rentabilité locative',
+        'Estimer la plus-value',
+        'Vérifier les diagnostics',
+        'Comparer 3 méthodes',
+        'Envoyer au propriétaire'
+      ]},
+      { name: 'Transaction', letter: 'T', brique: 'transaction', total: 124, qas: [
+        'Créer une annonce',
+        'Diffuser sur les portails',
+        'Planifier une visite',
+        'Enregistrer une offre',
+        'Comparer les offres',
+        'Suivre les retours visite',
+        'Préparer le compromis',
+        'Calculer les frais',
+        'Notifier les acquéreurs',
+        'Lancer la signature'
+      ]},
+      { name: 'Legal', letter: 'L', brique: 'legal', total: 156, qas: [
+        'Générer un mandat',
+        'Rédiger un compromis',
+        'Préparer un acte authentique',
+        'Annexer les diagnostics',
+        'Vérifier la conformité',
+        'Envoyer en signature',
+        'Archiver le dossier',
+        'Calculer les honoraires',
+        'Préparer la facture',
+        'Générer un avenant'
+      ]},
+      { name: 'CRM', letter: 'C', brique: 'crm', total: 142, qas: [
+        'Créer un contact',
+        'Programmer une relance',
+        'Envoyer un email',
+        'Lancer une campagne',
+        'Enregistrer une note',
+        'Planifier un RDV',
+        'Segmenter une audience',
+        'Suivre les interactions',
+        'Exporter une liste',
+        'Synchroniser les contacts'
+      ]},
+      { name: 'Contact', letter: 'C', brique: 'contact', total: 67, qas: [
+        'Ajouter un contact',
+        'Fusionner les doublons',
+        'Vérifier les coordonnées',
+        'Associer à un flow',
+        'Enrichir une fiche',
+        'Créer un groupe',
+        'Attribuer des tags',
+        'Importer un CSV',
+        'Exporter une vCard',
+        'Historique d\'échanges'
+      ]},
+      { name: 'Gestion', letter: 'G', brique: 'gestion', total: 118, qas: [
+        'Encaisser un loyer',
+        'Émettre une quittance',
+        'Régulariser les charges',
+        'Préparer un état des lieux',
+        'Renouveler un bail',
+        'Indexer un loyer',
+        'Notifier le locataire',
+        'Suivre les impayés',
+        'Préparer la révision',
+        'Clôturer un mandat'
+      ]},
+      { name: 'Syndic', letter: 'S', brique: 'syndic', total: 89, qas: [
+        'Convoquer une AG',
+        'Envoyer les convocations',
+        'Générer le PV d\'AG',
+        'Calculer les charges',
+        'Émettre les appels de fonds',
+        'Suivre les impayés',
+        'Créer un ordre du jour',
+        'Valider un devis travaux',
+        'Enregistrer un sinistre',
+        'Mettre à jour le règlement'
+      ]},
+      { name: 'Finance', letter: 'F', brique: 'finance', total: 78, qas: [
+        'Enregistrer les honoraires',
+        'Émettre une facture',
+        'Pointer un règlement',
+        'Préparer la TVA',
+        'Suivre les commissions',
+        'Générer un relevé',
+        'Rapprocher un compte',
+        'Clôturer un exercice',
+        'Calculer une marge',
+        'Exporter en compta'
+      ]},
+      { name: 'Ticket', letter: 'T', brique: 'ticket', total: 54, qas: [
+        'Créer un ticket',
+        'Assigner à un agent',
+        'Suivre les SLA',
+        'Escalader un incident',
+        'Notifier le demandeur',
+        'Clôturer un ticket',
+        'Générer un rapport',
+        'Catégoriser un ticket',
+        'Programmer un suivi',
+        'Analyser la satisfaction'
+      ]},
+      { name: 'Bien', letter: 'B', brique: 'bien', total: 96, qas: [
+        'Créer une fiche bien',
+        'Importer photos',
+        'Générer une visite virtuelle',
+        'Calculer la performance énergétique',
+        'Annexer le DPE',
+        'Mettre à jour le statut',
+        'Archiver un bien',
+        'Comparer deux biens',
+        'Géolocaliser sur carte',
+        'Synchroniser portails'
+      ]}
+    ];
+
+    const buildCard = (b) => {
+      const remaining = b.total - b.qas.length;
+      const card = document.createElement('article');
+      card.className = 'qa-card';
+      card.style.setProperty('--c', `var(--b-${b.brique})`);
+      // IMPORTANT : `.bk { --c: var(--b-default) }` réinitialise --c localement,
+      // donc on doit le poser directement en inline style sur le .bk lui-même
+      // (sinon les icônes apparaissent grises).
+      const colorVar = `var(--b-${b.brique})`;
+      card.innerHTML = `
+        <div class="qa-card__head">
+          <span class="bk bk--xl" style="--c: ${colorVar}"><span>${b.letter}</span></span>
+          <b>Brique</b>
+          <span class="qa-card__name">${b.name}</span>
+        </div>
+        <ul class="qa-card__list">
+          ${b.qas.map(q => `<li>${q}</li>`).join('')}
+        </ul>
+        <div class="qa-card__more">
+          <span>Et</span><b>${remaining}</b><span>actions de plus…</span>
+        </div>`;
+      return card;
+    };
+
+    const buildGroup = () => {
+      const frag = document.createDocumentFragment();
+      CATALOG.forEach(b => frag.appendChild(buildCard(b)));
+      return frag;
+    };
+
+    track.appendChild(buildGroup());
+    track.appendChild(buildGroup());
+    if (prefersReduced) track.style.animation = 'none';
   })();
 
 })();
