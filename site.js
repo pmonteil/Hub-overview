@@ -726,4 +726,79 @@
     if (prefersReduced) track.style.animation = 'none';
   })();
 
+  /* =================================================================
+     §7b AUTOMATION — Flow tabs (catalogue par template)
+     ================================================================= */
+  (() => {
+    const root = $('#autoFlows');
+    if (!root) return;
+    const tabs   = $$('.auto-flow-tab', root);
+    const panels = $$('.auto-flow-panel', root);
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.panel;
+        tabs.forEach(t => t.classList.toggle('is-active', t === tab));
+        panels.forEach(p => p.classList.toggle('is-active', p.dataset.panel === target));
+      });
+    });
+  })();
+
+  /* =================================================================
+     §7c AUTOMATION MIA — typewriter → loader → carte d'étape automatique
+     (réplique de §07 mia-gen, version courte)
+     ================================================================= */
+  (() => {
+    const stage   = $('#autoMiaStage');
+    const typer   = $('#autoGenTyper');
+    const enterEl = $('#autoGenEnter');
+    const loader  = $('#autoGenLoader');
+    const card    = $('#autoStepCard');
+    if (!stage || !typer || !card) return;
+
+    const PROMPT = "À l'étape de clôture, génère le compromis, fais signer les parties, notifie le notaire et archive le dossier.";
+
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+    const reset = () => {
+      typer.textContent = '';
+      enterEl?.classList.remove('is-show');
+      loader?.classList.remove('is-show');
+      card.classList.remove('is-show');
+    };
+
+    const typeWrite = async (text, speed = 26) => {
+      for (let i = 0; i <= text.length; i++) {
+        typer.textContent = text.slice(0, i);
+        await sleep(speed + Math.random() * 22);
+      }
+    };
+
+    const play = async () => {
+      reset();
+      await sleep(400);
+      await typeWrite(PROMPT);
+      enterEl?.classList.add('is-show');
+      await sleep(550);
+      loader?.classList.add('is-show');
+      await sleep(2200);
+      loader?.classList.remove('is-show');
+      await sleep(120);
+      card.classList.add('is-show');
+    };
+
+    let played = false;
+    const playOnce = async () => {
+      if (played) return;
+      played = true;
+      if (prefersReduced) {
+        typer.textContent = PROMPT;
+        enterEl?.classList.add('is-show');
+        card.classList.add('is-show');
+        return;
+      }
+      await play();
+    };
+    runWhenVisible(stage, playOnce, { threshold: 0.25 });
+  })();
+
 })();

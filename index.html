@@ -29,12 +29,13 @@
     <li><a href="#flow" data-step="05"><span>Le Flow</span></a></li>
     <li><a href="#orchestration" data-step="06"><span>Templates</span></a></li>
     <li><a href="#mia-gen" data-step="07"><span>MIA génère</span></a></li>
-    <li><a href="#interlude" data-step="08"><span>Stratégie</span></a></li>
-    <li><a href="#pieuvre" data-step="09"><span>Plateforme</span></a></li>
-    <li><a href="#usine" data-step="10"><span>L'usine M&amp;M</span></a></li>
-    <li><a href="#reseau" data-step="11"><span>Écosystème</span></a></li>
-    <li><a href="#reseau-actions" data-step="12"><span>Catalogue</span></a></li>
-    <li><a href="#conclusion" data-step="13"><span>Conclusion</span></a></li>
+    <li><a href="#automation" data-step="08"><span>Automatisation</span></a></li>
+    <li><a href="#interlude" data-step="09"><span>Stratégie</span></a></li>
+    <li><a href="#pieuvre" data-step="10"><span>Plateforme</span></a></li>
+    <li><a href="#usine" data-step="11"><span>L'usine M&amp;M</span></a></li>
+    <li><a href="#reseau" data-step="12"><span>Écosystème</span></a></li>
+    <li><a href="#reseau-actions" data-step="13"><span>Catalogue</span></a></li>
+    <li><a href="#conclusion" data-step="14"><span>Conclusion</span></a></li>
   </ol>
 </nav>
 
@@ -456,6 +457,358 @@
     </div>
 
     <p class="punchline" data-reveal>De l'intention à l'exécution — <em>sans configuration</em>.</p>
+  </div>
+</section>
+
+<!-- ================== 7b. AUTOMATISATION — la brique + catalogue par template ================== -->
+<section id="automation" class="section">
+  <div class="container">
+    <p class="eyebrow" data-reveal>07 · L'automatisation</p>
+    <h2 class="h-mega auto-title" data-reveal><em>Automatisation.</em></h2>
+    <p class="lede auto-subtitle" data-reveal><b>Une brique à part entière.</b> Hier, les automatisations étaient enfouies dans <span class="hi">Modelo InTouch</span>, la brique CRM. Désormais, c'est une brique autonome — chaque <span class="hi">flow</span> arrive avec son <span class="hi">catalogue d'automatisations possibles</span>.</p>
+
+    <div class="auto-hero" data-reveal>
+      <!-- Gauche : la brique (carré lumineux + éclair) -->
+      <aside class="auto-brique">
+        <span class="bk bk--xl bk--auto" style="--c: var(--b-automation)" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="bk__bolt"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg>
+        </span>
+        <div class="auto-brique__name">Brique <b>Automatisation</b></div>
+        <p class="auto-brique__tag">Le moteur silencieux qui fait tourner les flows.</p>
+      </aside>
+
+      <!-- Droite : sélecteur flow + catalogue -->
+      <div class="auto-flows" id="autoFlows">
+        <div class="auto-flow-tabs" role="tablist">
+          <button class="auto-flow-tab is-active" role="tab" data-panel="transaction">Transaction immobilière</button>
+          <button class="auto-flow-tab" role="tab" data-panel="locative">Location meublée</button>
+          <button class="auto-flow-tab" role="tab" data-panel="estimation">Vente en viager</button>
+          <button class="auto-flow-tab" role="tab" data-panel="mandat">Location saisonnière</button>
+        </div>
+
+        <div class="auto-flow-panels">
+          <!-- Transaction -->
+          <div class="auto-flow-panel is-active" data-panel="transaction" role="tabpanel">
+            <div class="auto-flow-panel__head">
+              <span class="dot dot--flow"></span>
+              <span>Flow · <b>Transaction immobilière</b></span>
+              <span class="auto-flow-panel__count">5 automatisations</span>
+            </div>
+            <ul class="auto-rules">
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Estimation validée</b><span class="auto-rule__sep">→</span><span>envoyer l'avis de valeur au propriétaire</span></div>
+                <span class="auto-type auto-type--comm" title="Communication"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 L11 13"/><path d="M22 2 L15 22 L11 13 L2 9 Z"/></svg>Comm.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Mandat signé</b><span class="auto-rule__sep">→</span><span>diffuser l'annonce sur les portails</span></div>
+                <span class="auto-type auto-type--exec" title="Exécution"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Visite planifiée</b><span class="auto-rule__sep">→</span><span>SMS de confirmation au client J-1</span></div>
+                <span class="auto-type auto-type--comm" title="Communication"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 L11 13"/><path d="M22 2 L15 22 L11 13 L2 9 Z"/></svg>Comm.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Offre acceptée</b><span class="auto-rule__sep">→</span><span>générer le compromis et notifier le notaire</span></div>
+                <span class="auto-type auto-type--exec" title="Exécution"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Compromis signé</b><span class="auto-rule__sep">→</span><span>générer la facture d'honoraires</span></div>
+                <span class="auto-type auto-type--exec" title="Exécution"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Location meublée -->
+          <div class="auto-flow-panel" data-panel="locative" role="tabpanel">
+            <div class="auto-flow-panel__head">
+              <span class="dot dot--flow"></span>
+              <span>Flow · <b>Location meublée</b></span>
+              <span class="auto-flow-panel__count">5 automatisations</span>
+            </div>
+            <ul class="auto-rules">
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Bail signé</b><span class="auto-rule__sep">→</span><span>lancer l'inventaire du mobilier</span></div>
+                <span class="auto-type auto-type--exec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Loyer encaissé</b><span class="auto-rule__sep">→</span><span>envoyer quittance + relevé de charges</span></div>
+                <span class="auto-type auto-type--comm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 L11 13"/><path d="M22 2 L15 22 L11 13 L2 9 Z"/></svg>Comm.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Loyer en retard 5j</b><span class="auto-rule__sep">→</span><span>relance automatique au locataire</span></div>
+                <span class="auto-type auto-type--comm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 L11 13"/><path d="M22 2 L15 22 L11 13 L2 9 Z"/></svg>Comm.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Préavis reçu</b><span class="auto-rule__sep">→</span><span>planifier l'EDL de sortie</span></div>
+                <span class="auto-type auto-type--exec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Régularisation annuelle</b><span class="auto-rule__sep">→</span><span>générer le décompte de charges</span></div>
+                <span class="auto-type auto-type--exec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Vente en viager -->
+          <div class="auto-flow-panel" data-panel="estimation" role="tabpanel">
+            <div class="auto-flow-panel__head">
+              <span class="dot dot--flow"></span>
+              <span>Flow · <b>Vente en viager</b></span>
+              <span class="auto-flow-panel__count">5 automatisations</span>
+            </div>
+            <ul class="auto-rules">
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Mandat signé</b><span class="auto-rule__sep">→</span><span>calculer bouquet + rente théoriques</span></div>
+                <span class="auto-type auto-type--exec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Compromis signé</b><span class="auto-rule__sep">→</span><span>activer le suivi mensuel de rente</span></div>
+                <span class="auto-type auto-type--exec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Rente versée</b><span class="auto-rule__sep">→</span><span>générer et envoyer le reçu mensuel</span></div>
+                <span class="auto-type auto-type--comm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 L11 13"/><path d="M22 2 L15 22 L11 13 L2 9 Z"/></svg>Comm.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Anniversaire crédirentier</b><span class="auto-rule__sep">→</span><span>notification interne à l'agent référent</span></div>
+                <span class="auto-type auto-type--comm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 L11 13"/><path d="M22 2 L15 22 L11 13 L2 9 Z"/></svg>Comm.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Décès crédirentier</b><span class="auto-rule__sep">→</span><span>alerter le notaire et stopper la rente</span></div>
+                <span class="auto-type auto-type--exec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Location saisonnière -->
+          <div class="auto-flow-panel" data-panel="mandat" role="tabpanel">
+            <div class="auto-flow-panel__head">
+              <span class="dot dot--flow"></span>
+              <span>Flow · <b>Location saisonnière</b></span>
+              <span class="auto-flow-panel__count">5 automatisations</span>
+            </div>
+            <ul class="auto-rules">
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Réservation reçue</b><span class="auto-rule__sep">→</span><span>email de confirmation + demande d'acompte</span></div>
+                <span class="auto-type auto-type--comm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 L11 13"/><path d="M22 2 L15 22 L11 13 L2 9 Z"/></svg>Comm.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Arrivée J-7</b><span class="auto-rule__sep">→</span><span>SMS check-in + code d'accès au logement</span></div>
+                <span class="auto-type auto-type--comm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 L11 13"/><path d="M22 2 L15 22 L11 13 L2 9 Z"/></svg>Comm.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Sortie locataire</b><span class="auto-rule__sep">→</span><span>EDL express + libération de la caution</span></div>
+                <span class="auto-type auto-type--exec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Avis client reçu</b><span class="auto-rule__sep">→</span><span>publier sur la fiche du bien</span></div>
+                <span class="auto-type auto-type--exec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+              <li class="auto-rule">
+                <span class="bolt bolt--mini" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg></span>
+                <div class="auto-rule__body"><b>Annulation</b><span class="auto-rule__sep">→</span><span>remboursement + libération de l'agenda</span></div>
+                <span class="auto-type auto-type--exec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/></svg>Exéc.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="auto-flows__hint" data-reveal>Chaque template arrive prêt à l'emploi. Vous gardez la main pour <span class="hi">activer, désactiver, ou en surcharger</span> sur un flow précis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== 7b-2. AUTOMATISATION — deux familles ================== -->
+<section id="automation-types" class="section section--dense">
+  <div class="container">
+    <p class="eyebrow" data-reveal>07 · les deux familles</p>
+    <h2 class="h-display" data-reveal>Deux familles. <em>Un seul moteur.</em></h2>
+    <p class="lede" data-reveal>Hier, on automatisait <span class="hi">les envois</span>. Aujourd'hui, on automatise aussi <span class="hi">les actions métier</span>. Le HUB élargit le moteur d'automatisation à toutes les briques.</p>
+
+    <div class="auto-types-grid" data-reveal>
+      <article class="auto-type-card auto-type-card--comm">
+        <header class="auto-type-card__head">
+          <span class="auto-type-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 2 L11 13"/>
+              <path d="M22 2 L15 22 L11 13 L2 9 Z"/>
+            </svg>
+          </span>
+          <div>
+            <p class="auto-type-card__kicker">Famille 1</p>
+            <h3>Communication</h3>
+          </div>
+        </header>
+        <p class="auto-type-card__lede">Tenir les bonnes personnes informées au bon moment, sans saisie manuelle.</p>
+        <ul class="auto-type-card__list">
+          <li><b>Email</b> au client après chaque étape clé</li>
+          <li><b>SMS</b> de rappel de visite ou de signature</li>
+          <li><b>Alerte interne</b> à l'agent ou au manager</li>
+          <li><b>Notification push</b> dans le HUB</li>
+        </ul>
+        <footer class="auto-type-card__foot"><span class="auto-type-card__legacy">Héritée de Modelo InTouch</span></footer>
+      </article>
+
+      <article class="auto-type-card auto-type-card--exec">
+        <header class="auto-type-card__head">
+          <span class="auto-type-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 6 L12 12 L6 18 M12 6 L18 12 L12 18"/>
+            </svg>
+          </span>
+          <div>
+            <p class="auto-type-card__kicker">Famille 2</p>
+            <h3>Exécution</h3>
+          </div>
+        </header>
+        <p class="auto-type-card__lede">Avancer le flow tout seul, sans intervention humaine, en orchestrant les briques.</p>
+        <ul class="auto-type-card__list">
+          <li><b>Exécuter une action rapide</b> (générer, signer, archiver…)</li>
+          <li><b>Faire passer le flow</b> à l'étape suivante</li>
+          <li><b>Lancer un sous-flow</b> (ex. EDL après bail signé)</li>
+          <li><b>Déclencher une autre automatisation</b> en chaîne</li>
+        </ul>
+        <footer class="auto-type-card__foot"><span class="auto-type-card__new">Nouveau dans le HUB</span></footer>
+      </article>
+    </div>
+
+    <p class="punchline" data-reveal>Le flow ne se contente plus d'orchestrer les humains. <em>Il se pilote tout seul.</em></p>
+  </div>
+</section>
+
+<!-- ================== 7c. AUTOMATISATION — MIA crée une étape automatique ================== -->
+<section id="automation-mia" class="section section--dense">
+  <div class="container">
+    <p class="eyebrow" data-reveal>07 · troisième façon</p>
+    <h2 class="h-display" data-reveal>Et avec MIA, <em>une étape entière</em>.</h2>
+    <p class="lede" data-reveal>Promptez une intention. MIA insère <span class="hi">une étape automatique</span> dans votre flow. Quand le flow l'atteint, elle <span class="hi">enchaîne les actions</span> toute seule, sans intervention humaine.</p>
+
+    <div class="auto-mia-stage" data-reveal id="autoMiaStage">
+      <!-- Acte 1 : prompt utilisateur (style identique à §07 mia-gen) -->
+      <div class="gen-prompt">
+        <span class="mia-prompt__sparkle"></span>
+        <span class="gen-prompt__text" id="autoGenTyper"></span><span class="gen-caret">▍</span>
+        <span class="gen-prompt__enter" id="autoGenEnter">⏎</span>
+      </div>
+
+      <!-- Acte 2 : loader -->
+      <div class="gen-loader" id="autoGenLoader">
+        <div class="lego">
+          <div class="lego__brick"></div>
+          <div class="lego__brick"></div>
+          <div class="lego__brick"></div>
+          <div class="lego__brick"></div>
+        </div>
+        <span class="ai-text-shimmer">MIA construit l'étape automatique…</span>
+      </div>
+
+      <!-- Acte 3 : carte sortie -->
+      <div class="auto-step-card" id="autoStepCard">
+        <header class="auto-step-card__head">
+          <span class="bk bk--lg bk--auto" style="--c: var(--b-automation)" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="bk__bolt"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg>
+          </span>
+          <div class="auto-step-card__title">
+            <small>Étape automatique ajoutée au flow</small>
+            <b>Auto-clôture · Transaction</b>
+          </div>
+          <span class="pill pill--orange">Brouillon</span>
+        </header>
+
+        <!-- Flow stepper -->
+        <div class="auto-step-flow">
+          <div class="auto-step-item is-done">
+            <span class="auto-step-num">1</span>
+            <span class="auto-step-label">Mandat</span>
+          </div>
+          <div class="auto-step-item is-done">
+            <span class="auto-step-num">2</span>
+            <span class="auto-step-label">Visites</span>
+          </div>
+          <div class="auto-step-item is-done">
+            <span class="auto-step-num">3</span>
+            <span class="auto-step-label">Offre acceptée</span>
+          </div>
+          <div class="auto-step-item is-auto">
+            <span class="auto-step-num auto-step-num--bolt">
+              <svg viewBox="0 0 24 24"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="auto-step-label"><b>Auto-clôture</b><small>nouvelle étape</small></span>
+          </div>
+        </div>
+
+        <!-- Cascade d'actions -->
+        <div class="auto-cascade">
+          <div class="auto-cascade__head">
+            <span class="auto-cascade__caption">À l'arrivée à l'étape <b>Auto-clôture</b>, MIA exécute :</span>
+          </div>
+          <ol class="auto-cascade__list">
+            <li class="auto-cascade__item" style="--d: 0ms">
+              <span class="auto-cascade__step">1</span>
+              <div class="auto-cascade__body">
+                <p><b>Générer</b> le compromis pré-rempli</p>
+                <small><span class="bk bk--xs" style="--c: var(--b-legal)"><span>L</span></span> action rapide · brique <b>Legal</b></small>
+              </div>
+            </li>
+            <li class="auto-cascade__item" style="--d: 200ms">
+              <span class="auto-cascade__step">2</span>
+              <div class="auto-cascade__body">
+                <p><b>Envoyer</b> en signature électronique aux parties</p>
+                <small><span class="bk bk--xs" style="--c: var(--b-legal)"><span>L</span></span> action rapide · brique <b>Legal</b></small>
+              </div>
+            </li>
+            <li class="auto-cascade__item" style="--d: 400ms">
+              <span class="auto-cascade__step">3</span>
+              <div class="auto-cascade__body">
+                <p><b>Notifier</b> le notaire référent du dossier</p>
+                <small><span class="bk bk--xs" style="--c: var(--b-contact)"><span>C</span></span> action rapide · brique <b>Contact</b></small>
+              </div>
+            </li>
+            <li class="auto-cascade__item" style="--d: 600ms">
+              <span class="auto-cascade__step">4</span>
+              <div class="auto-cascade__body">
+                <p><b>Générer</b> la facture d'honoraires</p>
+                <small><span class="bk bk--xs" style="--c: var(--b-finance)"><span>F</span></span> action rapide · brique <b>Finance</b></small>
+              </div>
+            </li>
+            <li class="auto-cascade__item" style="--d: 800ms">
+              <span class="auto-cascade__step">5</span>
+              <div class="auto-cascade__body">
+                <p><b>Archiver</b> le flow</p>
+                <small>fin de l'étape · flow clôturé</small>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <footer class="auto-step-card__foot">
+          <button class="btn btn--ai">Générer cette étape</button>
+          <button class="btn btn--ghost">Modifier</button>
+        </footer>
+      </div>
+    </div>
+
+    <p class="punchline" data-reveal>Une étape. Plusieurs actions. <em>Zéro intervention.</em></p>
   </div>
 </section>
 
