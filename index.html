@@ -32,7 +32,7 @@
     <li><a href="#automation" data-step="08"><span>Automatisation</span></a></li>
     <li><a href="#interlude" data-step="09"><span>Stratégie</span></a></li>
     <li><a href="#pieuvre" data-step="10"><span>Plateforme</span></a></li>
-    <li><a href="#usine" data-step="11"><span>L'usine M&amp;M</span></a></li>
+    <li><a href="#usine-v2" data-step="11"><span>L'usine M&amp;M</span></a></li>
     <li><a href="#reseau" data-step="12"><span>Écosystème</span></a></li>
     <li><a href="#reseau-actions" data-step="13"><span>Catalogue</span></a></li>
     <li><a href="#conclusion" data-step="14"><span>Conclusion</span></a></li>
@@ -828,6 +828,9 @@
     <p class="lede" data-reveal>Le moteur du HUB est <span class="hi">métier-agnostique</span>. Flow, Brique, Action rapide : le même socle absorbe tous les <span class="hi">métiers du groupe</span>.</p>
 
     <div class="pieuvre" data-reveal>
+      <svg class="pieuvre__orbit" aria-hidden="true" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-dasharray="0.001 5.5" />
+      </svg>
       <div class="pieuvre__core"><span>HUB</span></div>
       <span class="pieuvre__arm pieuvre__arm--1" style="--c: var(--metier-immo)"><i class="metier-dot"></i><b>Immobilier</b><i class="arm-sub">Transaction · Gestion · Syndic</i></span>
       <span class="pieuvre__arm pieuvre__arm--2" style="--c: var(--metier-notariat)"><i class="metier-dot"></i><b>Notariat</b><i class="arm-sub">Successions · Actes</i></span>
@@ -841,115 +844,139 @@
   </div>
 </section>
 
-<!-- ================== 10. USINE M&M ================== -->
-<section id="usine" class="section">
-  <div class="container">
-    <p class="eyebrow" data-reveal>Levier 2</p>
-    <h2 class="h-display" data-reveal>L'usine <em>M&amp;M</em>. <span class="hi">Du logiciel racheté</span> à la brique native.</h2>
-    <p class="lede" data-reveal>Un pipeline industriel transforme chaque logiciel acquis en brique du HUB. <span class="hi">DataNova</span> — le moteur data/IA du groupe — est le pivot.</p>
+<!-- ================== 11. USINE M&M ================== -->
+<section id="usine-v2" class="section section--uv2">
 
-    <div class="usine" data-reveal id="usineStage">
-      <ol class="usine__steps" id="usineSteps">
-        <li data-step="1" class="us-active">
-          <span class="us__num">01</span>
-          <span class="us__name">Acquisition</span>
-          <span class="us__sub">Logiciel racheté</span>
-        </li>
-        <li data-step="2">
-          <span class="us__num">02</span>
-          <span class="us__name">Audit</span>
-          <span class="us__sub">Cartographie</span>
-        </li>
-        <li data-step="3">
-          <span class="us__num">03</span>
-          <span class="us__name">Encapsulation</span>
-          <span class="us__sub">API + MCP</span>
-        </li>
-        <li data-step="4">
-          <span class="us__num">04</span>
-          <span class="us__name">DataNova</span>
-          <span class="us__sub">Apprend &amp; enrichit</span>
-        </li>
-        <li data-step="5">
-          <span class="us__num">05</span>
-          <span class="us__name">Intégration</span>
-          <span class="us__sub">Brique HUB</span>
-        </li>
-        <li data-step="6">
-          <span class="us__num">06</span>
-          <span class="us__name">Actions rapides</span>
-          <span class="us__sub">Cross-flows</span>
-        </li>
-      </ol>
+  <div class="uv2__scroll" id="uv2Scroll">
+    <div class="uv2__sticky">
 
-      <div class="usine__panels">
-        <article class="us-panel is-show" data-panel="1">
-          <div class="us-panel__viz us-viz--acq">
-            <div class="acq__editor"><span>Logiciel de syndic</span><small>indépendant, racheté</small></div>
-            <div class="acq__arrow">↘</div>
-            <div class="acq__septeo"><span>Septeo</span></div>
+      <!-- Titre permanent -->
+      <div class="uv2__header">
+        <div class="uv2__header-text">
+          <p class="eyebrow">Levier 2</p>
+          <h2 class="uv2__main-title">L'usine <em>M&amp;M</em>. <span class="hi">Du logiciel racheté</span> à la brique native.</h2>
+        </div>
+        <div class="uv2__header-right">
+          <span class="uv2__counter"><span id="uv2Cur">01</span><span class="uv2__sep"> / </span>05</span>
+          <div class="uv2__progress-rail">
+            <div class="uv2__progress-fill" id="uv2Fill"></div>
           </div>
-          <p>Septeo rachète des <span class="hi">logiciels métier</span> spécialisés — ici un logiciel de gestion de copropriété. Chacun apporte un <span class="hi">savoir-faire</span>, mais aussi sa propre interface, ses données, ses utilisateurs.</p>
-        </article>
-
-        <article class="us-panel" data-panel="2">
-          <div class="us-panel__viz us-viz--audit">
-            <div class="audit__layer"><span>Modèles de données</span></div>
-            <div class="audit__layer"><span>Liste exhaustive des fonctionnalités</span></div>
-            <div class="audit__layer"><span>Flows imaginables</span></div>
-          </div>
-          <p>Cartographie exhaustive du logiciel de syndic : <span class="hi">modèles de données</span>, <span class="hi">fonctionnalités</span>, <span class="hi">flows imaginables</span>. On identifie ce qui devient brique, action rapide, ou template.</p>
-        </article>
-
-        <article class="us-panel" data-panel="3">
-          <div class="us-panel__viz us-viz--encaps">
-            <div class="enc__legacy">Legacy syndic</div>
-            <div class="enc__shell"></div>
-            <div class="enc__api">API + MCP</div>
-          </div>
-          <p>Le logiciel legacy reste, mais il est <span class="hi">encapsulé</span> derrière une API uniforme et des <span class="hi">adapters MCP</span>. La brique parle <span class="hi">la langue du HUB</span>.</p>
-        </article>
-
-        <article class="us-panel" data-panel="4">
-          <div class="us-panel__viz us-viz--dn">
-            <div class="dn__nebula"></div>
-            <div class="dn__core"><span>DataNova</span></div>
-            <div class="dn__flow dn__flow--in"  aria-hidden="true"></div>
-            <div class="dn__flow dn__flow--out" aria-hidden="true"></div>
-            <span class="dn__label dn__label--in">Syndic → DataNova<small>nouvelles données</small></span>
-            <span class="dn__label dn__label--out">DataNova → toutes les briques<small>enrichissement</small></span>
-          </div>
-          <p class="us-panel__big">Plus il y a de <span class="hi">briques qui rentrent</span>, plus DataNova devient riche. <em>Plus DataNova est riche, plus chaque brique devient puissante.</em></p>
-        </article>
-
-        <article class="us-panel" data-panel="5">
-          <div class="us-panel__viz us-viz--integ">
-            <div class="integ__brick"><span class="bk" style="--c: var(--b-syndic)"><span>S</span></span></div>
-            <div class="integ__hub"><span>HUB</span></div>
-          </div>
-          <p>La brique <span class="hi">Syndic</span> est désormais <span class="hi">native dans le HUB</span>. Mêmes tokens, même DS, mêmes patterns. L'utilisateur ne voit pas la couture.</p>
-        </article>
-
-        <article class="us-panel" data-panel="6">
-          <div class="us-panel__viz us-viz--qas">
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Convoquer une AG</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Envoyer les convocations</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Générer le PV d'AG</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Calculer les charges</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Émettre les appels de fonds</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Suivre les impayés</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Créer un ordre du jour</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Valider un devis travaux</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Enregistrer un sinistre</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Mettre à jour le règlement</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Archiver les comptes</span>
-            <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Notifier les copropriétaires</span>
-          </div>
-          <p>Toutes les actions rapides exposées par la brique <span class="hi">Syndic</span> deviennent <span class="hi">composables</span> dans n'importe quel template de flow — y compris ceux à venir.</p>
-        </article>
+        </div>
       </div>
-    </div>
-  </div>
+
+      <!-- Slider horizontal : 6 slides côte à côte -->
+      <div class="uv2__viewport">
+        <div class="uv2__slides" id="uv2Slides">
+
+          <article class="uv2__slide">
+            <div class="uv2__slide-bg-num">01</div>
+            <div class="uv2__slide-inner">
+              <div class="uv2__slide-text">
+                <p class="uv2__step-label">01 — Acquisition</p>
+                <h3 class="uv2__slide-title">Logiciel racheté</h3>
+                <p>Septeo rachète des <span class="hi">logiciels métier</span> spécialisés — ici un logiciel de gestion de copropriété. Chacun apporte un <span class="hi">savoir-faire</span>, mais aussi sa propre interface, ses données, ses utilisateurs.</p>
+              </div>
+              <div class="us-panel__viz us-viz--acq">
+                <div class="acq__editor"><span>Logiciel de syndic</span><small>indépendant, racheté</small></div>
+                <div class="acq__arrow">↘</div>
+                <div class="acq__septeo"><span>Septeo</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="uv2__slide">
+            <div class="uv2__slide-bg-num">02</div>
+            <div class="uv2__slide-inner">
+              <div class="uv2__slide-text">
+                <p class="uv2__step-label">02 — Audit</p>
+                <h3 class="uv2__slide-title">Cartographie</h3>
+                <p>Cartographie exhaustive : <span class="hi">modèles de données</span>, <span class="hi">fonctionnalités</span>, <span class="hi">flows imaginables</span>. On identifie ce qui devient brique, action rapide, ou template.</p>
+              </div>
+              <div class="us-panel__viz us-viz--audit">
+                <div class="audit__layer"><span>Modèles de données</span></div>
+                <div class="audit__layer"><span>Liste exhaustive des fonctionnalités</span></div>
+                <div class="audit__layer"><span>Flows imaginables</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="uv2__slide">
+            <div class="uv2__slide-bg-num">03</div>
+            <div class="uv2__slide-inner">
+              <div class="uv2__slide-text">
+                <p class="uv2__step-label">03 — Transformation</p>
+                <h3 class="uv2__slide-title">Legacy → Brique native</h3>
+                <p>Le logiciel est <span class="hi">encapsulé</span> derrière une API uniforme et des <span class="hi">adapters MCP</span>. Il parle désormais la langue du HUB — et l'utilisateur voit une <span class="hi">brique native</span>, sans voir la couture.</p>
+              </div>
+              <div class="us-viz--transform">
+                <div class="tr__legacy">
+                  <div class="enc__legacy">Legacy syndic</div>
+                  <div class="enc__shell"></div>
+                  <div class="enc__api">API + MCP</div>
+                </div>
+                <div class="tr__arrow">→</div>
+                <div class="tr__brick">
+                  <span class="bk" style="--c: var(--b-syndic)"><span>S</span></span>
+                  <span class="tr__brick-label">Brique HUB</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="uv2__slide">
+            <div class="uv2__slide-bg-num">04</div>
+            <div class="uv2__slide-inner">
+              <div class="uv2__slide-text">
+                <p class="uv2__step-label">04 — DataNova</p>
+                <h3 class="uv2__slide-title">Apprend &amp; enrichit</h3>
+                <p class="us-panel__big">Plus il y a de <span class="hi">briques qui rentrent</span>, plus DataNova devient riche. <em>Plus DataNova est riche, plus chaque brique devient puissante.</em></p>
+              </div>
+              <div class="us-panel__viz us-viz--dn">
+                <div class="dn__nebula"></div>
+                <div class="dn__core"><span>DataNova</span></div>
+                <div class="dn__flow dn__flow--in" aria-hidden="true"></div>
+                <div class="dn__flow dn__flow--out" aria-hidden="true"></div>
+                <span class="dn__label dn__label--in">Syndic → DataNova<small>nouvelles données</small></span>
+                <span class="dn__label dn__label--out">DataNova → toutes les briques<small>enrichissement</small></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="uv2__slide">
+            <div class="uv2__slide-bg-num">05</div>
+            <div class="uv2__slide-inner">
+              <div class="uv2__slide-text">
+                <p class="uv2__step-label">05 — Actions rapides</p>
+                <h3 class="uv2__slide-title">Cross-flows</h3>
+                <p>Toutes les actions rapides exposées par la brique <span class="hi">Syndic</span> deviennent <span class="hi">composables</span> dans n'importe quel template de flow — y compris ceux à venir.</p>
+              </div>
+              <div class="us-panel__viz us-viz--qas">
+                <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Convoquer une AG</span>
+                <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Envoyer les convocations</span>
+                <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Générer le PV d'AG</span>
+                <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Calculer les charges</span>
+                <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Émettre les appels de fonds</span>
+                <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Suivre les impayés</span>
+                <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Créer un ordre du jour</span>
+                <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Valider un devis travaux</span>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /uv2__slides -->
+      </div><!-- /uv2__viewport -->
+
+      <!-- Pastilles de navigation en bas -->
+      <div class="uv2__dots" id="uv2Dots">
+        <span class="uv2__dot-item uv2--active" data-s="0">Acquisition</span>
+        <span class="uv2__dot-item" data-s="1">Audit</span>
+        <span class="uv2__dot-item" data-s="2">Transformation</span>
+        <span class="uv2__dot-item" data-s="3">DataNova</span>
+        <span class="uv2__dot-item" data-s="4">Actions rapides</span>
+      </div>
+
+    </div><!-- /uv2__sticky -->
+  </div><!-- /uv2__scroll -->
 </section>
 
 <!-- ================== 11. EFFET RÉSEAU ================== -->

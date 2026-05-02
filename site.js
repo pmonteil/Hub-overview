@@ -502,6 +502,93 @@
   })();
 
   /* =================================================================
+     §11b USINE V2 — wheel intercept : 1 wheel event = 1 slide
+     On ne quitte la zone qu'après avoir vu toutes les slides.
+     ================================================================= */
+  (() => {
+    const scrollZone = $('#uv2Scroll');
+    if (!scrollZone) return;
+    const sticky  = scrollZone.querySelector('.uv2__sticky');
+    const slides  = $('#uv2Slides');
+    const fill    = $('#uv2Fill');
+    const counter = $('#uv2Cur');
+    const dots    = $$('.uv2__dot-item', scrollZone);
+    const N       = dots.length || 6;
+    let   current = -1;
+    let   locked  = false;
+    const TRANS   = 920;
+
+    const applyStep = (idx) => {
+      current = idx;
+      if (slides)  slides.style.transform  = `translateX(-${idx * (100 / N)}%)`;
+      if (fill)    fill.style.width        = (idx / (N - 1) * 100) + '%';
+      if (counter) counter.textContent     = String(idx + 1).padStart(2, '0');
+      dots.forEach((d, i) => d.classList.toggle('uv2--active', i === idx));
+      // Compacte le titre dès la 2e slide
+      if (sticky) sticky.classList.toggle('uv2--compact', idx > 0);
+    };
+
+    /* Est-ce que le panneau est actuellement "docked" (sticky actif) ? */
+    const isStuck = () => {
+      const r = scrollZone.getBoundingClientRect();
+      return r.top <= 1 && r.bottom >= window.innerHeight - 1;
+    };
+
+    /* Avance d'une slide, bloque pendant la transition */
+    const go = (dir) => {
+      if (locked) return false;
+      const next = current + dir;
+      if (next < 0 || next >= N) return false; // hors bornes → ne consomme pas
+      locked = true;
+      applyStep(next);
+      setTimeout(() => { locked = false; }, TRANS);
+      return true; // événement consommé
+    };
+
+    /* Intercepte la molette quand le slider est actif */
+    const onWheel = (e) => {
+      if (!isStuck()) return;
+      const dir = e.deltaY > 0 ? 1 : -1;
+
+      // Sortie haut : step 0, molette vers haut → laisse défiler naturellement
+      if (dir === -1 && current <= 0) return;
+
+      // Sortie bas : step N-1 déjà vu → scroll jusqu'à la fin de la zone et libère
+      if (dir === 1 && current >= N - 1) {
+        const zoneTop = scrollZone.getBoundingClientRect().top + window.scrollY;
+        const endY    = zoneTop + scrollZone.offsetHeight - window.innerHeight + 2;
+        window.scrollTo({ top: endY, behavior: 'instant' });
+        return;
+      }
+
+      e.preventDefault();
+      go(dir);
+    };
+
+    /* Sync scroll : quand la zone passe sticky, init step 0 */
+    let wasStuck = false;
+    const onScroll = () => {
+      const stuck = isStuck();
+      if (stuck && !wasStuck && current < 0) applyStep(0);
+      wasStuck = stuck;
+    };
+
+    /* Clics sur les pastilles */
+    dots.forEach((d, i) => {
+      d.addEventListener('click', () => {
+        if (!isStuck() || locked) return;
+        locked = true;
+        applyStep(i);
+        setTimeout(() => { locked = false; }, TRANS);
+      });
+    });
+
+    runWhenVisible(scrollZone, () => { applyStep(0); }, { threshold: 0.1 });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('wheel',  onWheel,  { passive: false });
+  })();
+
+  /* =================================================================
      §11 RÉSEAU — halo de briques pulsant autour d'un flow skeleton
      ================================================================= */
   (() => {
