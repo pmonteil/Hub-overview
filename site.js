@@ -71,6 +71,79 @@
   };
 
   /* =================================================================
+     §04 BRICK MARQUEE — 3 rangées en alternance, boucle infinie seamless
+     Chaque brique porte sa couleur (token --b-*) qui irradie en glow.
+     ================================================================= */
+  (() => {
+    const root = $('#brickMarquee');
+    if (!root) return;
+
+    // Catalogue de briques (24 entrées) — réparties en 3 rangées
+    const ROWS = [
+      [
+        { letter: 'P', label: 'Prospection',       brique: 'prospection' },
+        { letter: 'E', label: 'Estimation',        brique: 'estimation'  },
+        { letter: 'T', label: 'Transaction',       brique: 'transaction' },
+        { letter: 'R', label: 'Recrutement',       brique: 'recrutement' },
+        { letter: 'L', label: 'Legal',             brique: 'legal'       },
+        { letter: 'G', label: 'Gestion locative',  brique: 'gestion'     },
+        { letter: 'P', label: 'Paie',              brique: 'paie'        },
+        { letter: 'A', label: 'Acte authentique',  brique: 'acte'        }
+      ],
+      [
+        { letter: 'D', label: 'Dossier juridique', brique: 'dossier-juridique' },
+        { letter: 'C', label: 'CRM',               brique: 'crm'         },
+        { letter: 'P', label: 'Patrimoine',        brique: 'patrimoine'  },
+        { letter: 'F', label: 'Foncier',           brique: 'foncier'     },
+        { letter: 'F', label: 'Finance',           brique: 'finance'     },
+        { letter: 'P', label: 'Procédure',         brique: 'procedure'   },
+        { letter: 'F', label: 'Formation',         brique: 'formation'   },
+        { letter: 'S', label: 'Syndic',            brique: 'syndic'      }
+      ],
+      [
+        { letter: 'H', label: 'Ressources Humaines', brique: 'rh'        },
+        { letter: 'F', label: 'Fiscal',            brique: 'fiscal'      },
+        { letter: 'U', label: 'Urbanisme',         brique: 'urbanisme'   },
+        { letter: 'C', label: 'Chantier',          brique: 'chantier'    },
+        { letter: 'T', label: 'Ticket',            brique: 'ticket'      },
+        { letter: 'C', label: 'Contact',           brique: 'contact'     },
+        { letter: 'B', label: 'Bien immobilier',   brique: 'bien'        },
+        { letter: 'P', label: 'Pige',              brique: 'prospection' }
+      ]
+    ];
+
+    const renderBrick = (b) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'brick';
+      const color = `var(--b-${b.brique})`;
+      // --c sur la brique (pour le glow extérieur lu par les rules .brick-marquee .brick)
+      btn.style.setProperty('--c', color);
+      // --c AUSSI en inline sur le .bk : sa propre rule .bk { --c: var(--b-default) }
+      // override l'héritage sinon → on perdrait la couleur du carré.
+      btn.innerHTML = `
+        <span class="bk" style="--c: ${color}"><span>${b.letter}</span></span>
+        <span>${b.label}</span>
+      `;
+      return btn;
+    };
+
+    $$('.brick-row__track', root).forEach((track, idx) => {
+      const items = ROWS[idx] || [];
+      // Doublé pour boucle seamless : on anime de 0 → -50% ; à -50% on est
+      // exactement au début du second exemplaire = continuité parfaite.
+      const frag1 = document.createDocumentFragment();
+      const frag2 = document.createDocumentFragment();
+      items.forEach((b) => {
+        frag1.appendChild(renderBrick(b));
+        frag2.appendChild(renderBrick(b));
+      });
+      track.appendChild(frag1);
+      track.appendChild(frag2);
+    });
+  })();
+
+  /* =================================================================
      §03 VISION — TopBar + cursor → "+" → dropdown (joue une fois, reste ouvert)
      ================================================================= */
   (() => {
@@ -150,65 +223,377 @@
   })();
 
   /* =================================================================
-     §05 FLOW WIDE — orange line + click navigation
+     §05 FLOW WIDE — Templates carousel
+     - 5 templates de flow (1 par métier vertical)
+     - Slider gauche/droite + dots
+     - Chaque flow porte son accent (couleur du vertical)
+     - Chaque QA porte la couleur de sa brique source (cross-métier visible)
      ================================================================= */
   (() => {
-    const stage = $('#flowWide');
-    const fill  = $('#flowLineFill');
-    const ol    = $('#flowWideSteps');
-    if (!stage || !fill || !ol) return;
+    const flowSection  = $('#flow');
+    const flowCard     = $('#flowCard');
+    const flowKicker   = $('#flowCardKicker');
+    const flowLabel    = $('#flowCardLabel');
+    const flowMeta     = $('#flowCardMeta');
+    const flowPill     = $('#flowCardPill');
+    const stage        = $('#flowWide');
+    const fill         = $('#flowLineFill');
+    const ol           = $('#flowWideSteps');
+    const dotsList     = $('#flowDots');
+    const prevBtn      = $('#flowPrev');
+    const nextBtn      = $('#flowNext');
+    if (!flowSection || !stage || !fill || !ol || !dotsList || !prevBtn || !nextBtn) return;
 
-    const steps = $$(':scope > li', ol);
-    const N = steps.length;
-    if (!N) return;
+    /* ────────────── Catalogue de templates de flow ──────────────
+       brique : token CSS --b-* (couleur = métier source)
+       letter : initiale affichée dans le carré .bk
+       brick  : nom court de la brique source affiché en small
+    */
+    const FLOWS = [
+      {
+        id: 'transaction',
+        accent: 'var(--metier-immo)',
+        kicker: 'Template · Immobilier',
+        label: 'Flow Transaction',
+        pill: 'En cours',
+        meta: 'Maj. il y a 12 min',
+        steps: [
+          { name: 'Prospection', qas: [
+            { brique: 'prospection', letter: 'P', label: 'Rechercher des biens',     brick: 'Prospection' },
+            { brique: 'prospection', letter: 'P', label: 'Identifier propriétaires', brick: 'Prospection' },
+            { brique: 'contact',     letter: 'C', label: 'Ajouter un contact',       brick: 'Contact'     }
+          ]},
+          { name: 'Estimation', qas: [
+            { brique: 'estimation',  letter: 'E', label: 'Créer un Avis de Valeur',     brick: 'Estimation' },
+            { brique: 'estimation',  letter: 'E', label: 'Analyser les biens similaires', brick: 'Estimation' },
+            { brique: 'crm',         letter: 'C', label: 'Envoyer au propriétaire',     brick: 'CRM'        }
+          ]},
+          { name: 'Mandat', qas: [
+            { brique: 'legal',       letter: 'L', label: 'Générer le mandat',     brick: 'Legal'   },
+            { brique: 'legal',       letter: 'L', label: 'Envoyer en signature',  brick: 'Legal'   },
+            { brique: 'contact',     letter: 'C', label: 'Associer un vendeur',   brick: 'Contact' }
+          ]},
+          { name: 'Commercialisation', qas: [
+            { brique: 'transaction', letter: 'T', label: 'Créer une annonce',     brick: 'Transaction' },
+            { brique: 'crm',         letter: 'C', label: 'Diffuser sur portails', brick: 'CRM'         },
+            { brique: 'crm',         letter: 'C', label: 'Gérer les demandes',    brick: 'CRM'         }
+          ]},
+          { name: 'Offres', qas: [
+            { brique: 'transaction', letter: 'T', label: 'Planifier une visite',  brick: 'Transaction' },
+            { brique: 'transaction', letter: 'T', label: 'Comparer les offres',   brick: 'Transaction' },
+            { brique: 'crm',         letter: 'C', label: 'Négocier',              brick: 'CRM'         }
+          ]},
+          { name: 'Signature', qas: [
+            { brique: 'legal',       letter: 'L', label: 'Générer le compromis',     brick: 'Legal'   },
+            { brique: 'crm',         letter: 'C', label: 'Envoyer aux parties',      brick: 'CRM'     },
+            { brique: 'finance',     letter: 'F', label: 'Enregistrer les honoraires', brick: 'Finance' }
+          ]}
+        ]
+      },
 
-    let i = 0, paused = false, timer = null, userInteracted = false;
+      {
+        id: 'recrutement',
+        accent: 'var(--metier-rh)',
+        kicker: 'Template · Ressources Humaines',
+        label: 'Flow Recrutement',
+        pill: 'En cours',
+        meta: 'Maj. il y a 1 h',
+        steps: [
+          { name: 'Sourcing', qas: [
+            { brique: 'crm',         letter: 'C', label: 'Diffuser l\'offre d\'emploi',     brick: 'CRM'         },
+            { brique: 'recrutement', letter: 'R', label: 'Sourcer sur réseaux pro',        brick: 'Recrutement' },
+            { brique: 'recrutement', letter: 'R', label: 'Importer une candidature',       brick: 'Recrutement' }
+          ]},
+          { name: 'Préqualification', qas: [
+            { brique: 'recrutement', letter: 'R', label: 'Analyser un CV',             brick: 'Recrutement' },
+            { brique: 'recrutement', letter: 'R', label: 'Envoyer un test technique',  brick: 'Recrutement' },
+            { brique: 'crm',         letter: 'C', label: 'Programmer un appel',         brick: 'CRM'         }
+          ]},
+          { name: 'Entretiens', qas: [
+            { brique: 'crm',         letter: 'C', label: 'Planifier un entretien',     brick: 'CRM'         },
+            { brique: 'recrutement', letter: 'R', label: 'Créer la grille d\'évaluation', brick: 'Recrutement' },
+            { brique: 'crm',         letter: 'C', label: 'Inviter un manager',          brick: 'CRM'         }
+          ]},
+          { name: 'Décision', qas: [
+            { brique: 'recrutement', letter: 'R', label: 'Comparer les candidats',  brick: 'Recrutement' },
+            { brique: 'crm',         letter: 'C', label: 'Demander des références', brick: 'CRM'         },
+            { brique: 'legal',       letter: 'L', label: 'Vérifier les diplômes',   brick: 'Legal'       }
+          ]},
+          { name: 'Offre', qas: [
+            { brique: 'legal',       letter: 'L', label: 'Promesse d\'embauche',         brick: 'Legal' },
+            { brique: 'legal',       letter: 'L', label: 'Contrat en signature',         brick: 'Legal' },
+            { brique: 'paie',        letter: 'P', label: 'Calculer la rémunération',      brick: 'Paie'  }
+          ]},
+          { name: 'Onboarding', qas: [
+            { brique: 'rh',          letter: 'H', label: 'Créer le dossier salarié',  brick: 'RH'      },
+            { brique: 'ticket',      letter: 'T', label: 'Commander le matériel IT',  brick: 'Ticket'  },
+            { brique: 'formation',   letter: 'F', label: 'Inscrire à l\'intégration', brick: 'Formation' }
+          ]}
+        ]
+      },
 
-    const apply = () => {
+      {
+        id: 'programme-neuf',
+        accent: 'var(--metier-immo)',
+        kicker: 'Template · Promotion immobilière',
+        label: 'Flow Programme Neuf',
+        pill: 'En cours',
+        meta: 'Maj. il y a 4 h',
+        steps: [
+          { name: 'Foncier', qas: [
+            { brique: 'foncier',     letter: 'F', label: 'Identifier des parcelles', brick: 'Foncier'    },
+            { brique: 'urbanisme',   letter: 'U', label: 'Analyser le PLU',          brick: 'Urbanisme'  },
+            { brique: 'crm',         letter: 'C', label: 'Approcher les propriétaires', brick: 'CRM'    },
+            { brique: 'legal',       letter: 'L', label: 'Promesse d\'achat',        brick: 'Legal'      }
+          ]},
+          { name: 'Faisabilité', qas: [
+            { brique: 'estimation',  letter: 'E', label: 'Charge foncière',     brick: 'Estimation' },
+            { brique: 'estimation',  letter: 'E', label: 'Étude de marché',     brick: 'Estimation' },
+            { brique: 'finance',     letter: 'F', label: 'Bilan promoteur',     brick: 'Finance'    },
+            { brique: 'crm',         letter: 'C', label: 'Briefer l\'architecte', brick: 'CRM'      }
+          ]},
+          { name: 'Permis de construire', qas: [
+            { brique: 'urbanisme',   letter: 'U', label: 'Déposer le PC',        brick: 'Urbanisme' },
+            { brique: 'urbanisme',   letter: 'U', label: 'Suivre l\'instruction', brick: 'Urbanisme' },
+            { brique: 'legal',       letter: 'L', label: 'Gérer les recours',    brick: 'Legal'     },
+            { brique: 'crm',         letter: 'C', label: 'Notifier les riverains', brick: 'CRM'    }
+          ]},
+          { name: 'Commercialisation VEFA', qas: [
+            { brique: 'transaction', letter: 'T', label: 'Annonce neuf',         brick: 'Transaction' },
+            { brique: 'crm',         letter: 'C', label: 'Diffuser sur portails', brick: 'CRM'        },
+            { brique: 'transaction', letter: 'T', label: 'Réserver un lot',       brick: 'Transaction' },
+            { brique: 'legal',       letter: 'L', label: 'Contrat de réservation', brick: 'Legal'    }
+          ]},
+          { name: 'Chantier', qas: [
+            { brique: 'chantier',    letter: 'C', label: 'Planifier les jalons',   brick: 'Chantier' },
+            { brique: 'finance',     letter: 'F', label: 'Appel de fonds',        brick: 'Finance'  },
+            { brique: 'ticket',      letter: 'T', label: 'Réserves entreprise',   brick: 'Ticket'   },
+            { brique: 'crm',         letter: 'C', label: 'Tenir informés',        brick: 'CRM'      }
+          ]},
+          { name: 'Livraison', qas: [
+            { brique: 'chantier',    letter: 'C', label: 'Visite cloisons',     brick: 'Chantier' },
+            { brique: 'legal',       letter: 'L', label: 'Signer la livraison', brick: 'Legal'    },
+            { brique: 'ticket',      letter: 'T', label: 'Lever les réserves',  brick: 'Ticket'   },
+            { brique: 'legal',       letter: 'L', label: 'Activer la GPA',      brick: 'Legal'    }
+          ]}
+        ]
+      },
+
+      {
+        id: 'contentieux',
+        accent: 'var(--metier-avocat)',
+        kicker: 'Template · Avocat',
+        label: 'Flow Dossier Contentieux',
+        pill: 'En cours',
+        meta: 'Maj. il y a 25 min',
+        steps: [
+          { name: 'Qualification', qas: [
+            { brique: 'dossier-juridique', letter: 'D', label: 'Créer la fiche client',     brick: 'Dossier juridique' },
+            { brique: 'dossier-juridique', letter: 'D', label: 'Vérifier conflits d\'intérêts', brick: 'Dossier juridique' },
+            { brique: 'legal',             letter: 'L', label: 'Convention d\'honoraires',   brick: 'Legal'   },
+            { brique: 'finance',           letter: 'F', label: 'Encaisser la provision',    brick: 'Finance' }
+          ]},
+          { name: 'Constitution du dossier', qas: [
+            { brique: 'dossier-juridique', letter: 'D', label: 'Ouvrir le dossier',          brick: 'Dossier juridique' },
+            { brique: 'dossier-juridique', letter: 'D', label: 'Collecter les pièces',       brick: 'Dossier juridique' },
+            { brique: 'dossier-juridique', letter: 'D', label: 'Rechercher la jurisprudence', brick: 'Dossier juridique' },
+            { brique: 'legal',             letter: 'L', label: 'Rédiger l\'assignation',     brick: 'Legal'   }
+          ]},
+          { name: 'Mise en état', qas: [
+            { brique: 'procedure',         letter: 'P', label: 'Communiquer via RPVA',     brick: 'Procédure' },
+            { brique: 'dossier-juridique', letter: 'D', label: 'Rédiger les conclusions',  brick: 'Dossier juridique' },
+            { brique: 'procedure',         letter: 'P', label: 'Programmer l\'audience',   brick: 'Procédure' },
+            { brique: 'crm',               letter: 'C', label: 'Informer le client',       brick: 'CRM'       }
+          ]},
+          { name: 'Audience', qas: [
+            { brique: 'dossier-juridique', letter: 'D', label: 'Préparer la plaidoirie',  brick: 'Dossier juridique' },
+            { brique: 'crm',               letter: 'C', label: 'Convoquer les témoins',   brick: 'CRM'       },
+            { brique: 'procedure',         letter: 'P', label: 'Saisir les notes d\'audience', brick: 'Procédure' }
+          ]},
+          { name: 'Décision', qas: [
+            { brique: 'procedure',         letter: 'P', label: 'Analyser le jugement',       brick: 'Procédure' },
+            { brique: 'dossier-juridique', letter: 'D', label: 'Note d\'opportunité d\'appel', brick: 'Dossier juridique' },
+            { brique: 'crm',               letter: 'C', label: 'Notifier le client',         brick: 'CRM'       },
+            { brique: 'finance',           letter: 'F', label: 'Facturer la prestation',     brick: 'Finance'   }
+          ]},
+          { name: 'Exécution', qas: [
+            { brique: 'crm',               letter: 'C', label: 'Mandater un commissaire',  brick: 'CRM'      },
+            { brique: 'finance',           letter: 'F', label: 'Suivi du recouvrement',    brick: 'Finance'  },
+            { brique: 'dossier-juridique', letter: 'D', label: 'Archiver le dossier',      brick: 'Dossier juridique' }
+          ]}
+        ]
+      },
+
+      {
+        id: 'succession',
+        accent: 'var(--metier-notariat)',
+        kicker: 'Template · Notaire',
+        label: 'Flow Succession',
+        pill: 'En cours',
+        meta: 'Maj. hier',
+        steps: [
+          { name: 'Ouverture', qas: [
+            { brique: 'acte',       letter: 'A', label: 'Créer le dossier de succession', brick: 'Acte authentique' },
+            { brique: 'acte',       letter: 'A', label: 'Identifier les héritiers',       brick: 'Acte authentique' },
+            { brique: 'acte',       letter: 'A', label: 'Demander l\'acte de décès',      brick: 'Acte authentique' },
+            { brique: 'crm',        letter: 'C', label: 'Convoquer les héritiers',         brick: 'CRM'              }
+          ]},
+          { name: 'Inventaire', qas: [
+            { brique: 'patrimoine', letter: 'P', label: 'Lister les biens immobiliers', brick: 'Patrimoine' },
+            { brique: 'estimation', letter: 'E', label: 'Estimer un bien (cross-métier)', brick: 'Estimation' },
+            { brique: 'patrimoine', letter: 'P', label: 'Recenser les comptes',          brick: 'Patrimoine' },
+            { brique: 'patrimoine', letter: 'P', label: 'Recenser le passif',            brick: 'Patrimoine' }
+          ]},
+          { name: 'Liquidation', qas: [
+            { brique: 'patrimoine', letter: 'P', label: 'Calculer la masse',            brick: 'Patrimoine' },
+            { brique: 'fiscal',     letter: 'F', label: 'Calculer les droits',          brick: 'Fiscal'     },
+            { brique: 'fiscal',     letter: 'F', label: 'Déposer la déclaration',       brick: 'Fiscal'     },
+            { brique: 'finance',    letter: 'F', label: 'Régler les dettes',            brick: 'Finance'    }
+          ]},
+          { name: 'Partage', qas: [
+            { brique: 'acte',       letter: 'A', label: 'Acte de partage',            brick: 'Acte authentique' },
+            { brique: 'acte',       letter: 'A', label: 'Attestation immobilière',    brick: 'Acte authentique' },
+            { brique: 'legal',      letter: 'L', label: 'Comparution dématérialisée', brick: 'Legal'           }
+          ]},
+          { name: 'Publication & Clôture', qas: [
+            { brique: 'acte',       letter: 'A', label: 'Publier au SPF',         brick: 'Acte authentique' },
+            { brique: 'finance',    letter: 'F', label: 'Régler les émoluments',  brick: 'Finance'          },
+            { brique: 'acte',       letter: 'A', label: 'Archiver au minutier',   brick: 'Acte authentique' },
+            { brique: 'crm',        letter: 'C', label: 'Notifier le closing',    brick: 'CRM'              }
+          ]}
+        ]
+      }
+    ];
+
+    /* ──────── Rendu ──────── */
+    const renderSteps = (flow) => {
+      const N = flow.steps.length;
+      // Adapte la grille et la ligne de progression au nombre réel d'étapes
+      stage.style.setProperty('--flow-cols', N);
+      const offset = (100 / (2 * N)).toFixed(4) + '%';
+      stage.style.setProperty('--flow-line-offset', `calc(${offset})`);
+
+      ol.innerHTML = flow.steps.map((step, idx) => `
+        <li>
+          <div class="step__head">
+            <span class="step__num">${idx + 1}</span>
+            <span class="step__name">${step.name}</span>
+          </div>
+          <ul class="step__qas">
+            ${step.qas.map(qa => `
+              <li>
+                <span class="bk bk--xs" style="--c: var(--b-${qa.brique})"><span>${qa.letter}</span></span>
+                <b>${qa.label}</b>
+                <small>${qa.brick}</small>
+              </li>
+            `).join('')}
+          </ul>
+        </li>
+      `).join('');
+    };
+
+    const renderDots = () => {
+      dotsList.innerHTML = FLOWS.map((f, idx) => `
+        <li role="presentation">
+          <button class="flow-switcher__dot${idx === flowIdx ? ' is-active' : ''}"
+                  type="button" role="tab"
+                  data-idx="${idx}"
+                  aria-label="${f.label}"
+                  aria-selected="${idx === flowIdx}"></button>
+        </li>
+      `).join('');
+      $$('.flow-switcher__dot', dotsList).forEach((dot) => {
+        dot.addEventListener('click', () => goTo(parseInt(dot.dataset.idx, 10), true));
+      });
+    };
+
+    /* ──────── État ──────── */
+    let flowIdx = 0;
+    let i = 0;            // step actif (boucle de 0 à N-1)
+    let timer = null;
+
+    const STEP_INTERVAL = 1300; // ms — vitesse du défilement des étapes
+
+    const currentFlow = () => FLOWS[flowIdx];
+
+    const applyAccent = () => {
+      flowSection.style.setProperty('--accent', currentFlow().accent);
+      // soft + glow restent en color-mix CSS — pas besoin de les recalculer
+      flowSection.style.setProperty('--accent-soft',
+        `color-mix(in oklab, ${currentFlow().accent} 18%, transparent)`);
+      flowSection.style.setProperty('--accent-glow',
+        `color-mix(in oklab, ${currentFlow().accent} 45%, transparent)`);
+    };
+
+    const applyStep = () => {
+      const steps = $$(':scope > li', ol);
+      const N = steps.length;
       steps.forEach((li, idx) => {
         li.classList.remove('is-done', 'is-active');
         if (idx < i) li.classList.add('is-done');
         else if (idx === i) li.classList.add('is-active');
       });
-      // line fill: from center of step 1 (1/12) to center of active step
-      // span from step 1 center to step 6 center = 100% - 2*(1/12) = 10/12.
-      // active idx of N=6 → fraction = i / (N-1).
-      const pct = N === 1 ? 0 : (i / (N - 1)) * 100;
+      const pct = N <= 1 ? 0 : (i / (N - 1)) * 100;
       fill.style.width = pct + '%';
     };
 
-    const tick = () => {
-      if (paused || userInteracted) return;
-      i = (i + 1) % (N + 1);
-      if (i > N - 1) {
-        steps.forEach(li => { li.classList.remove('is-active'); li.classList.add('is-done'); });
-        fill.style.width = '100%';
-        timer = setTimeout(() => { i = 0; apply(); timer = setTimeout(tick, 1700); }, 1900);
-        return;
-      }
-      apply();
-      timer = setTimeout(tick, 2400);
+    // Plus de click sur les steps — toutes les QAs sont déjà visibles,
+    // l'animation ne sert qu'à matérialiser la progression du flow.
+    const bindStepClicks = () => { /* no-op */ };
+
+    // Boucle infinie sur le flow actif : 0 → 1 → ... → N-1 → 0 → ...
+    // Aucune pause, aucun "mode terminé" — on revient simplement au début.
+    const tickStep = () => {
+      const N = currentFlow().steps.length;
+      i = (i + 1) % N;
+      applyStep();
+      timer = setTimeout(tickStep, STEP_INTERVAL);
     };
 
+    /* ──────── Slider — uniquement déclenché par l'utilisateur ──────── */
+    const goTo = (newIdx) => {
+      const max = FLOWS.length;
+      flowIdx = ((newIdx % max) + max) % max;
+      i = 0;
+
+      // Soft fade sur la card
+      flowCard.classList.add('is-changing');
+      setTimeout(() => flowCard.classList.remove('is-changing'), 260);
+
+      // Update header
+      flowKicker.textContent = currentFlow().kicker;
+      flowLabel.textContent  = currentFlow().label;
+      flowMeta.textContent   = currentFlow().meta;
+      flowPill.textContent   = currentFlow().pill;
+
+      // Update steps + accent
+      applyAccent();
+      renderSteps(currentFlow());
+      applyStep();
+      renderDots();
+
+      // Reset du tick : on relance immédiatement sur step 0 du nouveau flow
+      clearTimeout(timer);
+      if (!prefersReduced) timer = setTimeout(tickStep, STEP_INTERVAL);
+    };
+
+    prevBtn.addEventListener('click', () => goTo(flowIdx - 1));
+    nextBtn.addEventListener('click', () => goTo(flowIdx + 1));
+
+    /* ──────── Init ──────── */
     runWhenVisible(stage, () => {
-      apply();
-      if (!prefersReduced) timer = setTimeout(tick, 1800);
-    }, { threshold: 0.25 });
+      applyAccent();
+      renderSteps(currentFlow());
+      applyStep();
+      renderDots();
+      if (!prefersReduced) timer = setTimeout(tickStep, 800);
+    }, { threshold: 0.2 });
 
-    // Click navigation
-    steps.forEach((li, idx) => {
-      li.addEventListener('click', () => {
-        userInteracted = true;
-        clearTimeout(timer);
-        i = idx;
-        apply();
-        // Resume autoplay after a longer pause
-        if (!prefersReduced) timer = setTimeout(() => { userInteracted = false; tick(); }, 6000);
-      });
+    // Clavier ← → pour naviguer entre flows
+    flowCard.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(flowIdx - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(flowIdx + 1); }
     });
-
-    stage.addEventListener('mouseenter', () => { paused = true; clearTimeout(timer); });
-    stage.addEventListener('mouseleave', () => { paused = false; if (!prefersReduced && !userInteracted) timer = setTimeout(tick, 1500); });
   })();
 
   /* =================================================================
@@ -516,10 +901,13 @@
     const N       = dots.length || 6;
     let   current = -1;
     let   locked  = false;
+    let   lastSlideConfirmed = false; // double-wheel requis sur le dernier slide pour sortir
     const TRANS   = 920;
 
     const applyStep = (idx) => {
       current = idx;
+      // Réinitialise la confirmation si on revient sur un slide ≠ dernier
+      if (idx < N - 1) lastSlideConfirmed = false;
       if (slides)  slides.style.transform  = `translateX(-${idx * (100 / N)}%)`;
       if (fill)    fill.style.width        = (idx / (N - 1) * 100) + '%';
       if (counter) counter.textContent     = String(idx + 1).padStart(2, '0');
@@ -550,11 +938,23 @@
       if (!isStuck()) return;
       const dir = e.deltaY > 0 ? 1 : -1;
 
+      // Réinitialise la confirmation si on remonte depuis le dernier slide
+      if (dir === -1 && lastSlideConfirmed) lastSlideConfirmed = false;
+
       // Sortie haut : step 0, molette vers haut → laisse défiler naturellement
       if (dir === -1 && current <= 0) return;
 
-      // Sortie bas : step N-1 déjà vu → scroll jusqu'à la fin de la zone et libère
+      // Sortie bas sur le dernier slide
       if (dir === 1 && current >= N - 1) {
+        // Pendant la transition (locked), bloquer absolument la sortie
+        if (locked) { e.preventDefault(); return; }
+        // Premier wheel sur le dernier slide → juste confirmer qu'on l'a vu
+        if (!lastSlideConfirmed) {
+          lastSlideConfirmed = true;
+          e.preventDefault();
+          return;
+        }
+        // Deuxième wheel → sortie réelle
         const zoneTop = scrollZone.getBoundingClientRect().top + window.scrollY;
         const endY    = zoneTop + scrollZone.offsetHeight - window.innerHeight + 2;
         window.scrollTo({ top: endY, behavior: 'instant' });
