@@ -841,7 +841,7 @@
   })();
 
   /* =================================================================
-     §10 USINE M&M — auto-cycle steps + line fill via --us-progress
+     §10 USINE M&A — auto-cycle steps + line fill via --us-progress
      ================================================================= */
   (() => {
     const stage     = $('#usineStage');
