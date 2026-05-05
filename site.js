@@ -222,6 +222,10 @@
     });
   })();
 
+  /* Helper global : génère le HTML d'une icône dossier (folder coloré selon le métier) */
+  const dossierIconHTML = (_code, color, xs = false) =>
+    `<span class="dossier-icon${xs ? ' dossier-icon--xs' : ''}" style="--di-color:${color}" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span>`;
+
   /* =================================================================
      §05 FLOW WIDE — Templates carousel
      - 5 templates de flow (1 par métier vertical)
@@ -253,8 +257,9 @@
       {
         id: 'transaction',
         accent: 'var(--metier-immo)',
-        kicker: 'Template · Immobilier',
-        label: 'Flow Transaction',
+        metierColor: 'var(--metier-immo)',
+        kicker: 'Type de dossier · Vente de bien',
+        label: 'Vente de bien',
         pill: 'En cours',
         meta: 'Maj. il y a 12 min',
         steps: [
@@ -294,8 +299,9 @@
       {
         id: 'recrutement',
         accent: 'var(--metier-rh)',
-        kicker: 'Template · Ressources Humaines',
-        label: 'Flow Recrutement',
+        metierColor: 'var(--metier-rh)',
+        kicker: 'Type de dossier · Ressources Humaines',
+        label: 'Dossier Recrutement',
         pill: 'En cours',
         meta: 'Maj. il y a 1 h',
         steps: [
@@ -335,8 +341,9 @@
       {
         id: 'programme-neuf',
         accent: 'var(--metier-immo)',
-        kicker: 'Template · Promotion immobilière',
-        label: 'Flow Programme Neuf',
+        metierColor: 'var(--metier-immo)',
+        kicker: 'Type de dossier · Promotion immobilière',
+        label: 'Dossier Programme Neuf',
         pill: 'En cours',
         meta: 'Maj. il y a 4 h',
         steps: [
@@ -382,8 +389,9 @@
       {
         id: 'contentieux',
         accent: 'var(--metier-avocat)',
-        kicker: 'Template · Avocat',
-        label: 'Flow Dossier Contentieux',
+        metierColor: 'var(--metier-juridique)',
+        kicker: 'Type de dossier · Avocat',
+        label: 'Dossier Contentieux',
         pill: 'En cours',
         meta: 'Maj. il y a 25 min',
         steps: [
@@ -427,8 +435,9 @@
       {
         id: 'succession',
         accent: 'var(--metier-notariat)',
-        kicker: 'Template · Notaire',
-        label: 'Flow Succession',
+        metierColor: 'var(--metier-notariat)',
+        kicker: 'Type de dossier · Notaire',
+        label: 'Dossier Succession',
         pill: 'En cours',
         meta: 'Maj. hier',
         steps: [
@@ -566,6 +575,10 @@
       flowMeta.textContent   = currentFlow().meta;
       flowPill.textContent   = currentFlow().pill;
 
+      // Update dossier icon color (métier)
+      const iconEl = $('#flowCardIcon');
+      if (iconEl) iconEl.style.setProperty('--di-color', currentFlow().metierColor || 'var(--metier-immo)');
+
       // Update steps + accent
       applyAccent();
       renderSteps(currentFlow());
@@ -606,35 +619,72 @@
     const CATS = [
       {
         name: 'Immobilier', metier: 'immo',
-        tpls: ['Transaction résidentielle', 'Gestion locative meublée', 'Syndic de copropriété', 'Mandat de recherche', 'Vente en viager']
+        items: [
+          { code: 'VB', color: 'var(--metier-immo)', label: 'Vente de bien résidentiel' },
+          { code: 'GL', color: 'var(--metier-immo)', label: 'Gestion locative meublée' },
+          { code: 'GC', color: 'var(--metier-immo)', label: 'Syndic de copropriété' },
+          { code: 'AB', color: 'var(--metier-immo)', label: 'Achat de bien' },
+          { code: 'SC', color: 'var(--metier-immo)', label: 'Vente en viager' },
+        ]
       },
       {
         name: 'Notariat', metier: 'notariat',
-        tpls: ['Succession avec bien immobilier', 'Donation entre époux', 'Création de SCI', 'Acte de vente notarié', 'Partage successoral']
+        items: [
+          { code: 'ST', color: 'var(--metier-notariat)', label: 'Succession avec bien immobilier' },
+          { code: 'ST', color: 'var(--metier-notariat)', label: 'Donation entre époux' },
+          { code: 'CS', color: 'var(--metier-notariat)', label: 'Création de SCI' },
+          { code: 'AJ', color: 'var(--metier-notariat)', label: 'Acte de vente notarié' },
+          { code: 'ST', color: 'var(--metier-notariat)', label: 'Partage successoral' },
+        ]
       },
       {
         name: 'RH', metier: 'rh',
-        tpls: ['Recrutement CDI cadre', 'Onboarding collaborateur', 'Rupture conventionnelle', 'Mobilité interne', 'Renouvellement période d\'essai']
+        items: [
+          { code: 'RE', color: 'var(--metier-rh)', label: 'Recrutement CDI cadre' },
+          { code: 'FD', color: 'var(--metier-rh)', label: 'Onboarding collaborateur' },
+          { code: 'GC', color: 'var(--metier-rh)', label: 'Rupture conventionnelle' },
+          { code: 'PE', color: 'var(--metier-rh)', label: 'Mobilité interne' },
+          { code: 'RE', color: 'var(--metier-rh)', label: 'Renouvellement période d\'essai' },
+        ]
       },
       {
         name: 'Juridique', metier: 'juridique',
-        tpls: ['Contentieux commercial', 'Mise en conformité RGPD', 'Rédaction de CGV', 'Litige fournisseur']
+        items: [
+          { code: 'AJ', color: 'var(--metier-juridique)', label: 'Contentieux commercial' },
+          { code: 'CS', color: 'var(--metier-juridique)', label: 'Mise en conformité RGPD' },
+          { code: 'AJ', color: 'var(--metier-juridique)', label: 'Rédaction de CGV' },
+          { code: 'DO', color: 'var(--metier-juridique)', label: 'Litige fournisseur' },
+        ]
       },
       {
         name: 'Comptabilité', metier: 'compta',
-        tpls: ['Clôture d\'exercice annuel', 'Dossier de révision client', 'Déclaration de TVA trimestrielle']
+        items: [
+          { code: 'PE', color: 'var(--metier-compta)', label: 'Clôture d\'exercice annuel' },
+          { code: 'PE', color: 'var(--metier-compta)', label: 'Dossier de révision client' },
+          { code: 'PE', color: 'var(--metier-compta)', label: 'Déclaration de TVA trimestrielle' },
+        ]
       },
       {
         name: 'BTP', metier: 'btp',
-        tpls: ['Appel d\'offres marché public', 'Suivi de chantier résidentiel', 'Réception de travaux']
+        items: [
+          { code: 'DO', color: 'var(--metier-btp)', label: 'Appel d\'offres marché public' },
+          { code: 'SC', color: 'var(--metier-btp)', label: 'Suivi de chantier résidentiel' },
+          { code: 'TM', color: 'var(--metier-btp)', label: 'Réception de travaux' },
+        ]
       },
       {
         name: 'Santé', metier: 'sante',
-        tpls: ['Renouvellement conventionnement', 'Audit qualité clinique']
+        items: [
+          { code: 'AA', color: 'var(--metier-sante)', label: 'Renouvellement conventionnement' },
+          { code: 'AA', color: 'var(--metier-sante)', label: 'Audit qualité clinique' },
+        ]
       },
       {
         name: 'Public · Collectivités', metier: 'public',
-        tpls: ['Marché public fournitures', 'Délibération de conseil municipal']
+        items: [
+          { code: 'DO', color: 'var(--metier-public)', label: 'Marché public fournitures' },
+          { code: 'AA', color: 'var(--metier-public)', label: 'Délibération de conseil municipal' },
+        ]
       }
     ];
 
@@ -647,7 +697,7 @@
         card.innerHTML = `
           <div class="tpl-cat__head"><i class="dot" style="--c: var(--metier-${cat.metier})"></i><b>${cat.name}</b></div>
           <ul class="tpl-cat__list">
-            ${cat.tpls.map(t => `<li><i class="dot" style="--c: var(--metier-${cat.metier})"></i>${t}</li>`).join('')}
+            ${cat.items.map(t => `<li>${dossierIconHTML(t.code, t.color, true)}${t.label}</li>`).join('')}
           </ul>`;
         frag.appendChild(card);
       });
@@ -677,7 +727,7 @@
     const validateBtn= $('#genValidateBtn');
     if (!stage || !typer || !timeline || !wrap) return;
 
-    const PROMPT = 'Crée un flow pour la signature d\'un bail commercial.';
+    const PROMPT = 'Crée un dossier pour la signature d\'un bail commercial.';
 
     const FLOW = [
       { name: 'Préparation', qas: [
@@ -1108,7 +1158,7 @@
         'Ajouter un contact',
         'Fusionner les doublons',
         'Vérifier les coordonnées',
-        'Associer à un flow',
+        'Associer à un dossier',
         'Enrichir une fiche',
         'Créer un groupe',
         'Attribuer des tags',
@@ -1190,7 +1240,7 @@
       card.innerHTML = `
         <div class="qa-card__head">
           <span class="bk bk--xl" style="--c: ${colorVar}"><span>${b.letter}</span></span>
-          <b>Brique</b>
+          <b>Outil</b>
           <span class="qa-card__name">${b.name}</span>
         </div>
         <ul class="qa-card__list">

@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Modelo HUB — Le hub qui orchestre tous les outils du métier</title>
-<meta name="description" content="Modelo HUB · La plateforme métier du groupe Septeo. Flow, Brique, Action rapide, MIA, DataNova." />
+<meta name="description" content="Modelo HUB · La plateforme métier du groupe Septeo. Dossier, Outil, Action rapide, MIA, DataNova." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -12,6 +12,16 @@
 </head>
 <body>
 <noscript><div class="noscript">Cette présentation est interactive — activez JavaScript pour l'expérience complète.</div></noscript>
+
+<!-- Symboles SVG réutilisables -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="icon-folder" viewBox="0 0 24 21">
+    <path d="M1 5.5C1 4.4 1.9 3.5 3 3.5H9.2L11.2 5.5H21C22.1 5.5 23 6.4 23 7.5V18.5C23 19.6 22.1 20.5 21 20.5H3C1.9 20.5 1 19.6 1 18.5V5.5Z"
+          fill="var(--folder-fill, none)"
+          stroke="var(--folder-stroke, rgba(255,255,255,0.45))"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
 
 <div class="progress" aria-hidden="true"><span class="progress__bar" id="progressBar"></span></div>
 
@@ -25,8 +35,8 @@
     <li><a href="#hero" data-step="01"><span>Hero</span></a></li>
     <li><a href="#problem" data-step="02"><span>Le problème</span></a></li>
     <li><a href="#vision" data-step="03"><span>La vision</span></a></li>
-    <li><a href="#brique" data-step="04"><span>La Brique</span></a></li>
-    <li><a href="#flow" data-step="05"><span>Le Flow</span></a></li>
+    <li><a href="#brique" data-step="04"><span>L'Outil</span></a></li>
+    <li><a href="#flow" data-step="05"><span>Le Dossier</span></a></li>
     <li><a href="#orchestration" data-step="06"><span>Templates</span></a></li>
     <li><a href="#mia-gen" data-step="07"><span>MIA génère</span></a></li>
     <li><a href="#automation" data-step="08"><span>Automatisation</span></a></li>
@@ -61,7 +71,7 @@
         <path d="M8 7v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         <circle cx="8" cy="5" r="0.8" fill="currentColor"/>
       </svg>
-      <span>Maquette conceptuelle — noms de briques, actions rapides, flows et données sont illustratifs.</span>
+      <span>Maquette conceptuelle — noms d'outils, actions rapides, dossiers et données sont illustratifs.</span>
     </aside>
     <p class="hero__sub" data-reveal>
       Le hub qui orchestre tous les <span class="hi">outils du métier</span>.
@@ -97,15 +107,19 @@
   <div class="container">
     <p class="eyebrow" data-reveal>02 · La vision</p>
     <h2 class="h-display" data-reveal>Un seul <em>point d'entrée</em>.</h2>
-    <p class="lede" data-reveal>Une TopBar unique. Un bouton <span class="hi">+</span> qui donne accès à <span class="hi">toutes les briques métier</span> et <span class="hi">tous les flows en cours</span>. Plus jamais de zapping entre logiciels.</p>
+    <p class="lede" data-reveal>Une TopBar unique. Un bouton <span class="hi">+</span> qui donne accès à <span class="hi">tous les outils métier</span> et <span class="hi">tous les dossiers en cours</span>. Plus jamais de zapping entre logiciels.</p>
 
     <div class="vision-mock" data-reveal>
       <!-- TopBar -->
       <div class="topbar">
         <div class="tm__logo">M</div>
         <div class="tm__tabs">
-          <span class="tm__tab tm__tab--active"><i class="dot dot--flow"></i>Transaction · Rivoli</span>
-          <span class="tm__tab"><i class="dot dot--flow"></i>Gestion · Lyon</span>
+          <span class="tm__tab tm__tab--active">
+            <span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span>
+            Vente de bien · Rivoli</span>
+          <span class="tm__tab">
+            <span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span>
+            Dossier Gestion · Lyon</span>
           <span class="tm__tab"><i class="dot dot--tool"></i>CRM</span>
           <span class="tm__plus" id="tmPlus" aria-label="Nouvel onglet">+</span>
         </div>
@@ -127,15 +141,21 @@
 
       <!-- Dropdown opens from + -->
       <div class="plus-dropdown" id="plusDropdown" role="dialog" aria-label="Nouvel onglet">
-        <button class="pd__cta">
-          <span class="pd__cta-icon">＋</span>
-          <span><b>Créer un nouveau flow</b><small>Décrivez votre besoin, MIA s'occupe du reste</small></span>
-        </button>
+        <div class="pd__actions">
+          <button class="pd__cta pd__cta--classic">
+            <span class="pd__cta-icon pd__cta-icon--plain">＋</span>
+            <span><b>Nouveau dossier</b><small>Choisir parmi les types de dossiers existants</small></span>
+          </button>
+          <button class="pd__cta pd__cta--ai">
+            <span class="pd__cta-icon">✦</span>
+            <span><b>Générer un type de dossier avec MIA</b><small>Votre besoin ne correspond à aucun type existant ?</small></span>
+          </button>
+        </div>
 
         <div class="pd__cols">
           <div class="pd__col">
-            <span class="pd__title">Briques · ouverture libre</span>
-            <ul class="pd__list">
+            <span class="pd__title">Outils · ouverture libre</span>
+            <ul class="pd__list pd__list--tools">
               <li><span class="bk" style="--c: var(--b-prospection)"><span>P</span></span>Prospection</li>
               <li><span class="bk" style="--c: var(--b-estimation)"><span>E</span></span>Estimation</li>
               <li><span class="bk" style="--c: var(--b-transaction)"><span>T</span></span>Transaction</li>
@@ -143,35 +163,37 @@
               <li><span class="bk" style="--c: var(--b-crm)"><span>C</span></span>CRM</li>
               <li><span class="bk" style="--c: var(--b-contact)"><span>C</span></span>Contact</li>
               <li><span class="bk" style="--c: var(--b-gestion)"><span>G</span></span>Gestion</li>
+              <li><span class="bk" style="--c: var(--b-syndic)"><span>S</span></span>Syndic</li>
               <li><span class="bk" style="--c: var(--b-finance)"><span>F</span></span>Finance</li>
+              <li><span class="bk" style="--c: var(--b-ticket)"><span>T</span></span>Ticket</li>
             </ul>
           </div>
           <div class="pd__col">
-            <span class="pd__title">Flows récents</span>
+            <span class="pd__title">Dossiers récents</span>
             <ul class="pd__list pd__list--grouped">
-              <li class="pd__group"><i class="dot" style="--c: var(--metier-immo)"></i>Immobilier<span class="pd__count">4</span></li>
-              <li><i class="pd__arrow" aria-hidden="true">→</i><span class="pd__flow-tpl">Transaction</span><span class="pd__flow-name">24 rue de Rivoli</span><small>il y a 12 min</small></li>
-              <li><i class="pd__arrow" aria-hidden="true">→</i><span class="pd__flow-tpl">Programme neuf</span><span class="pd__flow-name">Villa Cap d'Antibes</span><small>il y a 1 h</small></li>
-              <li><i class="pd__arrow" aria-hidden="true">→</i><span class="pd__flow-tpl">Gestion locative</span><span class="pd__flow-name">Lyon Part-Dieu</span><small>il y a 2 j</small></li>
-              <li><i class="pd__arrow" aria-hidden="true">→</i><span class="pd__flow-tpl">Gestion locative</span><span class="pd__flow-name">5 rue du Bac</span><small>la sem. dernière</small></li>
+              <li class="pd__group"><i class="dot" style="--c: var(--metier-immo)"></i>Immobilier</li>
+              <li><span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span><span class="pd__flow-tpl">Vente de bien</span><span class="pd__flow-name">24 rue de Rivoli</span></li>
+              <li><span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span><span class="pd__flow-tpl">Programme neuf</span><span class="pd__flow-name">Villa Cap d'Antibes</span></li>
+              <li><span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span><span class="pd__flow-tpl">Gestion locative</span><span class="pd__flow-name">Lyon Part-Dieu</span></li>
+              <li><span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span><span class="pd__flow-tpl">Gestion locative</span><span class="pd__flow-name">5 rue du Bac</span></li>
             </ul>
             <ul class="pd__list pd__list--grouped">
-              <li class="pd__group"><i class="dot" style="--c: var(--metier-notariat)"></i>Notariat<span class="pd__count">2</span></li>
-              <li><i class="pd__arrow" aria-hidden="true">→</i><span class="pd__flow-tpl">Succession</span><span class="pd__flow-name">Étude Bernard</span><small>hier</small></li>
-              <li><i class="pd__arrow" aria-hidden="true">→</i><span class="pd__flow-tpl">Acte authentique</span><span class="pd__flow-name">Vente Bordeaux</span><small>il y a 8 j</small></li>
+              <li class="pd__group"><i class="dot" style="--c: var(--metier-notariat)"></i>Notariat</li>
+              <li><span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-notariat)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span><span class="pd__flow-tpl">Succession</span><span class="pd__flow-name">Étude Bernard</span></li>
+              <li><span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-notariat)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span><span class="pd__flow-tpl">Acte authentique</span><span class="pd__flow-name">Vente Bordeaux</span></li>
             </ul>
             <ul class="pd__list pd__list--grouped">
-              <li class="pd__group"><i class="dot" style="--c: var(--metier-rh)"></i>RH<span class="pd__count">2</span></li>
-              <li><i class="pd__arrow" aria-hidden="true">→</i><span class="pd__flow-tpl">Recrutement</span><span class="pd__flow-name">CDI Dev Senior</span><small>il y a 2 j</small></li>
-              <li><i class="pd__arrow" aria-hidden="true">→</i><span class="pd__flow-tpl">Recrutement</span><span class="pd__flow-name">Onboarding Marie Dupont</span><small>il y a 10 j</small></li>
+              <li class="pd__group"><i class="dot" style="--c: var(--metier-rh)"></i>RH</li>
+              <li><span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-rh)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span><span class="pd__flow-tpl">Recrutement</span><span class="pd__flow-name">CDI Dev Senior</span></li>
+              <li><span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-rh)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span><span class="pd__flow-tpl">Onboarding</span><span class="pd__flow-name">Marie Dupont</span></li>
             </ul>
             <ul class="pd__list pd__list--grouped">
-              <li class="pd__group"><i class="dot" style="--c: var(--metier-juridique)"></i>Juridique<span class="pd__count">1</span></li>
-              <li><i class="pd__arrow" aria-hidden="true">→</i><span class="pd__flow-tpl">Contentieux</span><span class="pd__flow-name">Dossier Leclerc</span><small>il y a 3 j</small></li>
+              <li class="pd__group"><i class="dot" style="--c: var(--metier-juridique)"></i>Juridique</li>
+              <li><span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-juridique)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span><span class="pd__flow-tpl">Contentieux</span><span class="pd__flow-name">Dossier Leclerc</span></li>
             </ul>
             <ul class="pd__list pd__list--grouped">
-              <li class="pd__group"><i class="dot" style="--c: var(--metier-compta)"></i>Comptabilité<span class="pd__count">1</span></li>
-              <li><i class="pd__arrow" aria-hidden="true">→</i><span class="pd__flow-tpl">Clôture annuelle</span><span class="pd__flow-name">Cabinet Morin</span><small>la sem. dernière</small></li>
+              <li class="pd__group"><i class="dot" style="--c: var(--metier-compta)"></i>Comptabilité</li>
+              <li><span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-compta)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span><span class="pd__flow-tpl">Clôture annuelle</span><span class="pd__flow-name">Cabinet Morin</span></li>
             </ul>
           </div>
         </div>
@@ -182,12 +204,12 @@
   </div>
 </section>
 
-<!-- ================== 4. BRIQUE ================== -->
+<!-- ================== 4. OUTIL ================== -->
 <section id="brique" class="section">
   <div class="container">
     <p class="eyebrow" data-reveal>03 · Concept 1/2</p>
-    <h2 class="h-display" data-reveal>La <em>Brique</em>. Un <span class="hi">module métier autonome</span>.</h2>
-    <p class="lede" data-reveal>Chaque domaine du métier est encapsulé dans une brique : autonome, réutilisable, exposée par ses <span class="hi">actions rapides</span>. La couleur signale toujours le <span class="hi">métier source</span> — quatre transverses (Legal, CRM, Finance, Ticket) gardent une teinte fixe.</p>
+    <h2 class="h-display" data-reveal>L'<em>Outil</em>. Un <span class="hi">module métier autonome</span>.</h2>
+    <p class="lede" data-reveal>Chaque domaine du métier est encapsulé dans un outil : autonome, réutilisable, exposé par ses <span class="hi">actions rapides</span>. La couleur signale toujours le <span class="hi">métier source</span> — quatre transverses (Legal, CRM, Finance, Ticket) gardent une teinte fixe.</p>
 
     <!-- Marquee infini : 3 rangées en alternance LTR/RTL, populées par JS -->
     <div class="brick-marquee" data-reveal id="brickMarquee" aria-hidden="true">
@@ -214,7 +236,7 @@
           <span class="tag">Mode 1</span>
           <h3>Exploration libre</h3>
         </header>
-        <p>La brique est <span class="hi">ouverte directement</span> depuis le HUB. Vue macro, KPIs, configuration, analytics — sans flow autour.</p>
+        <p>L'outil est <span class="hi">ouvert directement</span> depuis le HUB. Vue macro, KPIs, configuration, analytics — sans dossier autour.</p>
         <div class="mode__viz mode__viz--macro">
           <div class="macro__head"><span class="bk bk--sm" style="--c: var(--b-crm)"><span>C</span></span><b>CRM</b><span class="macro__chip">Vue macro</span></div>
           <div class="macro__kpis">
@@ -232,11 +254,13 @@
       <article class="mode" data-reveal>
         <header class="mode__head">
           <span class="tag tag--flow">Mode 2</span>
-          <h3>Convoquée par un Flow</h3>
+          <h3>Convoqué par un Dossier</h3>
         </header>
-        <p>Les <span class="hi">actions rapides</span> de la brique sont <span class="hi">disponibles directement dans le flow</span>, à l'étape où elles sont utiles. L'utilisateur déclenche l'action sans jamais sortir du flow ni ouvrir la brique.</p>
+        <p>Les <span class="hi">actions rapides</span> de l'outil sont <span class="hi">disponibles directement dans le dossier</span>, à l'étape où elles sont utiles. L'utilisateur déclenche l'action sans jamais sortir du dossier ni ouvrir l'outil.</p>
         <div class="mode__viz mode__viz--cockpit">
-          <div class="cockpit__head"><span class="dot dot--flow"></span><b>Flow Transaction · Rivoli</b></div>
+          <div class="cockpit__head">
+            <span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span>
+            <b>Vente de bien · Rivoli</b></div>
 
           <ol class="mini-timeline">
             <li class="mt-done"><span class="mt-num">1</span><span>Prospection</span></li>
@@ -253,43 +277,42 @@
             <li>
               <span class="bk bk--sm" style="--c: var(--b-estimation)"><span>E</span></span>
               <span class="qa-name">Créer un Avis de Valeur</span>
-              <span class="qa-from">brique <b>Estimation</b></span>
+              <span class="qa-from">outil <b>Estimation</b></span>
             </li>
             <li>
               <span class="bk bk--sm" style="--c: var(--b-estimation)"><span>E</span></span>
               <span class="qa-name">Analyser les biens similaires</span>
-              <span class="qa-from">brique <b>Estimation</b></span>
+              <span class="qa-from">outil <b>Estimation</b></span>
             </li>
             <li>
               <span class="bk bk--sm" style="--c: var(--b-crm)"><span>C</span></span>
               <span class="qa-name">Envoyer l'estimation au propriétaire</span>
-              <span class="qa-from">brique <b>CRM</b></span>
+              <span class="qa-from">outil <b>CRM</b></span>
             </li>
           </ul>
         </div>
       </article>
     </div>
 
-    <p class="punchline" data-reveal>Une brique, deux usages. <em>Pour piloter à haut niveau, ou pour exécuter au bon moment.</em></p>
+    <p class="punchline" data-reveal>Un outil, deux usages. <em>Pour piloter à haut niveau, ou pour exécuter au bon moment.</em></p>
 
     <ul class="bullets" data-reveal>
       <li>Autonome</li>
       <li>Réutilisable cross-métiers</li>
       <li>Composable</li>
-      <li>Exposée via actions rapides</li>
+      <li>Exposé via actions rapides</li>
     </ul>
   </div>
 </section>
 
-<!-- ================== 5. FLOW ================== -->
+<!-- ================== 5. DOSSIER ================== -->
 <section id="flow" class="section section--full">
   <div class="container">
     <p class="eyebrow" data-reveal>04 · Concept 2/2</p>
-    <h2 class="h-display" data-reveal>Le <em>Flow</em>. Un <span class="hi">parcours métier orchestré</span>.</h2>
+    <h2 class="h-display" data-reveal>Le <em>Dossier</em>. Un <span class="hi">cas d'usage structuré</span>.</h2>
     <p class="lede" data-reveal>
-      Un flow porte sa temporalité, ses étapes, ses participants. À chaque étape, il convoque les
-      <span class="hi">bonnes actions rapides</span> — chacune marquée de la <span class="hi">couleur du métier source</span>.
-      Un flow Notaire qui appelle l'Estimation immobilière reste reconnaissable d'un coup d'œil.
+      Un dossier porte son cas d'usage, son contexte, ses participants. Il embarque un <span class="hi">workflow</span> — une séquence d'étapes qui guide son traitement. À chaque étape, les
+      <span class="hi">bons outils sont convoqués</span> via leurs actions rapides — chacune marquée de la <span class="hi">couleur du métier source</span>.
     </p>
   </div>
 
@@ -297,27 +320,27 @@
   <div class="flow-wide" data-reveal id="flowWide">
     <div class="flow-wide__inner">
 
-      <!-- Flow card avec switcher de templates -->
+      <!-- Dossier card avec switcher de types -->
       <article class="flow-card flow-card--switcher" id="flowCard">
         <header class="flow-card__head">
-          <span class="dot dot--flow"></span>
+          <span class="dossier-icon dossier-icon--xs" id="flowCardIcon" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span>
           <span class="flow-card__title">
-            <small class="flow-card__kicker" id="flowCardKicker">Template · Transaction immobilière</small>
-            <b id="flowCardLabel">Flow Transaction</b>
+            <small class="flow-card__kicker" id="flowCardKicker">Type de dossier · Vente de bien</small>
+            <b id="flowCardLabel">Vente de bien</b>
           </span>
           <span class="pill pill--accent" id="flowCardPill">En cours</span>
           <span class="flow-card__meta" id="flowCardMeta">Maj. il y a 12 min</span>
         </header>
 
         <!-- Slider arrows + dots -->
-        <nav class="flow-switcher" aria-label="Changer de template de flow">
-          <button class="flow-switcher__arrow flow-switcher__arrow--prev" id="flowPrev" aria-label="Template précédent">
+        <nav class="flow-switcher" aria-label="Changer de type de dossier">
+          <button class="flow-switcher__arrow flow-switcher__arrow--prev" id="flowPrev" aria-label="Type précédent">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
               <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <ol class="flow-switcher__dots" id="flowDots" role="tablist"></ol>
-          <button class="flow-switcher__arrow flow-switcher__arrow--next" id="flowNext" aria-label="Template suivant">
+          <button class="flow-switcher__arrow flow-switcher__arrow--next" id="flowNext" aria-label="Type suivant">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
               <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -325,7 +348,7 @@
         </nav>
       </article>
 
-      <!-- Connecteur vertical : montre que la timeline découle du template -->
+      <!-- Connecteur vertical : montre que le workflow découle du type de dossier -->
       <div class="flow-connector" aria-hidden="true">
         <span class="flow-connector__line"></span>
         <span class="flow-connector__cap"></span>
@@ -340,12 +363,12 @@
   </div>
 
   <div class="container">
-    <p class="punchline" data-reveal>À chaque étape, les bonnes briques. Au bon moment. <em>Sans jamais quitter le flow.</em></p>
+    <p class="punchline" data-reveal>À chaque étape, les bons outils. Au bon moment. <em>Sans jamais quitter le dossier.</em></p>
 
     <ul class="bullets" data-reveal>
       <li>Suivi temporel</li>
-      <li>Parcours métier structuré</li>
-      <li>Orchestre les briques transverses</li>
+      <li>Cas d'usage structuré</li>
+      <li>Orchestre les outils transverses</li>
       <li>La couleur indique toujours le métier source</li>
     </ul>
   </div>
@@ -355,8 +378,8 @@
 <section id="orchestration" class="section">
   <div class="container">
     <p class="eyebrow" data-reveal>05 · L'extensibilité</p>
-    <h2 class="h-display" data-reveal>Un <span class="hi">template de flow</span> par besoin métier.</h2>
-    <p class="lede" data-reveal>Chaque métier compose ses templates à partir des briques disponibles. <span class="hi">Le moteur est métier-agnostique</span> — un même socle absorbe immobilier, notariat, RH, syndic, promotion, et plus encore.</p>
+    <h2 class="h-display" data-reveal>Un <span class="hi">type de dossier</span> par besoin métier.</h2>
+    <p class="lede" data-reveal>Chaque métier compose ses types de dossiers à partir des outils disponibles. <span class="hi">Le moteur est métier-agnostique</span> — un même socle absorbe immobilier, notariat, RH, syndic, promotion, et plus encore.</p>
   </div>
 
   <div class="tpl-marquee" data-reveal id="tplMarquee">
@@ -371,8 +394,8 @@
 <section id="mia-gen" class="section section--dense">
   <div class="container">
     <p class="eyebrow" data-reveal>06 · L'intention devient exécution</p>
-    <h2 class="h-display" data-reveal>MIA <em>génère un flow</em>.</h2>
-    <p class="lede" data-reveal>Un prompt en langage naturel. Un <span class="hi">template inédit</span>, prêt à être validé. De l'intention à l'exécution — <span class="hi">sans configuration</span>.</p>
+    <h2 class="h-display" data-reveal>MIA <em>génère un dossier</em>.</h2>
+    <p class="lede" data-reveal>Un prompt en langage naturel. Un <span class="hi">type de dossier inédit</span>, prêt à être validé. De l'intention à l'exécution — <span class="hi">sans configuration</span>.</p>
 
     <div class="genstage" data-reveal data-pause-on-hover id="genStage">
       <!-- Acte 1 : prompt -->
@@ -390,7 +413,7 @@
           <div class="lego__brick"></div>
           <div class="lego__brick"></div>
         </div>
-        <span class="ai-text-shimmer">MIA construit votre flow…</span>
+        <span class="ai-text-shimmer">MIA construit votre dossier…</span>
       </div>
 
       <!-- Acte 3 : timeline horizontale (scrollée) -->
@@ -405,7 +428,7 @@
       <div class="gen-validate" id="genValidate">
         <div class="mia-bubble">
           <span class="mia-bubble__avatar">M</span>
-          <p>J'ai assemblé un flow <span class="hi">Bail commercial</span> en <b>5 étapes</b> mobilisant <b>5 briques</b>. On le crée ?</p>
+          <p>J'ai assemblé un dossier <span class="hi">Bail commercial</span> en <b>5 étapes</b> mobilisant <b>5 outils</b>. On le crée ?</p>
           <div class="mia-bubble__actions">
             <button class="btn btn--ai" id="genValidateBtn">✓ Valider et créer</button>
             <button class="btn btn--ghost">Modifier</button>
@@ -444,7 +467,7 @@
   <div class="container">
     <p class="eyebrow" data-reveal>07 · L'automatisation</p>
     <h2 class="h-mega auto-title" data-reveal><em>Automatisation.</em></h2>
-    <p class="lede auto-subtitle" data-reveal><b>Une brique à part entière.</b> Hier, les automatisations étaient enfouies dans <span class="hi">Modelo InTouch</span>, la brique CRM. Désormais, c'est une brique autonome — chaque <span class="hi">flow</span> arrive avec son <span class="hi">catalogue d'automatisations possibles</span>.</p>
+    <p class="lede auto-subtitle" data-reveal><b>Un outil à part entière.</b> Hier, les automatisations étaient enfouies dans <span class="hi">Modelo InTouch</span>, l'outil CRM. Désormais, c'est un outil autonome — chaque <span class="hi">type de dossier</span> arrive avec son <span class="hi">catalogue d'automatisations possibles</span>.</p>
 
     <div class="auto-hero" data-reveal>
       <!-- Gauche : la brique (carré lumineux + éclair) -->
@@ -452,14 +475,14 @@
         <span class="bk bk--xl bk--auto" style="--c: var(--b-automation)" aria-hidden="true">
           <svg viewBox="0 0 24 24" class="bk__bolt"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg>
         </span>
-        <div class="auto-brique__name">Brique <b>Automatisation</b></div>
-        <p class="auto-brique__tag">Le moteur silencieux qui fait tourner les flows.</p>
+        <div class="auto-brique__name">Outil <b>Automatisation</b></div>
+        <p class="auto-brique__tag">Le moteur silencieux qui fait tourner les dossiers.</p>
       </aside>
 
       <!-- Droite : sélecteur flow + catalogue -->
       <div class="auto-flows" id="autoFlows">
         <div class="auto-flow-tabs" role="tablist">
-          <button class="auto-flow-tab is-active" role="tab" data-panel="transaction">Transaction immobilière</button>
+          <button class="auto-flow-tab is-active" role="tab" data-panel="transaction">Vente de bien</button>
           <button class="auto-flow-tab" role="tab" data-panel="locative">Location meublée</button>
           <button class="auto-flow-tab" role="tab" data-panel="estimation">Vente en viager</button>
           <button class="auto-flow-tab" role="tab" data-panel="mandat">Location saisonnière</button>
@@ -469,8 +492,8 @@
           <!-- Transaction -->
           <div class="auto-flow-panel is-active" data-panel="transaction" role="tabpanel">
             <div class="auto-flow-panel__head">
-              <span class="dot dot--flow"></span>
-              <span>Flow · <b>Transaction immobilière</b></span>
+              <span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span>
+              <span>Dossier · <b>Vente de bien</b></span>
               <span class="auto-flow-panel__count">5 automatisations</span>
             </div>
             <ul class="auto-rules">
@@ -505,8 +528,8 @@
           <!-- Location meublée -->
           <div class="auto-flow-panel" data-panel="locative" role="tabpanel">
             <div class="auto-flow-panel__head">
-              <span class="dot dot--flow"></span>
-              <span>Flow · <b>Location meublée</b></span>
+              <span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span>
+              <span>Dossier · <b>Location meublée</b></span>
               <span class="auto-flow-panel__count">5 automatisations</span>
             </div>
             <ul class="auto-rules">
@@ -541,8 +564,8 @@
           <!-- Vente en viager -->
           <div class="auto-flow-panel" data-panel="estimation" role="tabpanel">
             <div class="auto-flow-panel__head">
-              <span class="dot dot--flow"></span>
-              <span>Flow · <b>Vente en viager</b></span>
+              <span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span>
+              <span>Dossier · <b>Vente en viager</b></span>
               <span class="auto-flow-panel__count">5 automatisations</span>
             </div>
             <ul class="auto-rules">
@@ -577,8 +600,8 @@
           <!-- Location saisonnière -->
           <div class="auto-flow-panel" data-panel="mandat" role="tabpanel">
             <div class="auto-flow-panel__head">
-              <span class="dot dot--flow"></span>
-              <span>Flow · <b>Location saisonnière</b></span>
+              <span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span>
+              <span>Dossier · <b>Location saisonnière</b></span>
               <span class="auto-flow-panel__count">5 automatisations</span>
             </div>
             <ul class="auto-rules">
@@ -611,7 +634,7 @@
           </div>
         </div>
 
-        <p class="auto-flows__hint" data-reveal>Chaque template arrive prêt à l'emploi. Vous gardez la main pour <span class="hi">activer, désactiver, ou en surcharger</span> sur un flow précis.</p>
+        <p class="auto-flows__hint" data-reveal>Chaque type de dossier arrive prêt à l'emploi. Vous gardez la main pour <span class="hi">activer, désactiver, ou en surcharger</span> sur un dossier précis.</p>
       </div>
     </div>
   </div>
@@ -622,7 +645,7 @@
   <div class="container">
     <p class="eyebrow" data-reveal>07 · les deux familles</p>
     <h2 class="h-display" data-reveal>Deux familles. <em>Un seul moteur.</em></h2>
-    <p class="lede" data-reveal>Hier, on automatisait <span class="hi">les envois</span>. Aujourd'hui, on automatise aussi <span class="hi">les actions métier</span>. Le HUB élargit le moteur d'automatisation à toutes les briques.</p>
+    <p class="lede" data-reveal>Hier, on automatisait <span class="hi">les envois</span>. Aujourd'hui, on automatise aussi <span class="hi">les actions métier</span>. Le HUB élargit le moteur d'automatisation à tous les outils.</p>
 
     <div class="auto-types-grid" data-reveal>
       <article class="auto-type-card auto-type-card--comm">
@@ -660,18 +683,18 @@
             <h3>Exécution</h3>
           </div>
         </header>
-        <p class="auto-type-card__lede">Avancer le flow tout seul, sans intervention humaine, en orchestrant les briques.</p>
+        <p class="auto-type-card__lede">Avancer le dossier tout seul, sans intervention humaine, en orchestrant les outils.</p>
         <ul class="auto-type-card__list">
           <li><b>Exécuter une action rapide</b> (générer, signer, archiver…)</li>
-          <li><b>Faire passer le flow</b> à l'étape suivante</li>
-          <li><b>Lancer un sous-flow</b> (ex. EDL après bail signé)</li>
+          <li><b>Faire passer le dossier</b> à l'étape suivante</li>
+          <li><b>Lancer un sous-dossier</b> (ex. EDL après bail signé)</li>
           <li><b>Déclencher une autre automatisation</b> en chaîne</li>
         </ul>
         <footer class="auto-type-card__foot"><span class="auto-type-card__new">Nouveau dans le HUB</span></footer>
       </article>
     </div>
 
-    <p class="punchline" data-reveal>Le flow ne se contente plus d'orchestrer les humains. <em>Il se pilote tout seul.</em></p>
+    <p class="punchline" data-reveal>Plus besoin de tout déclencher à la main. <em>Vous choisissez ce que le dossier gère seul.</em></p>
   </div>
 </section>
 
@@ -680,7 +703,7 @@
   <div class="container">
     <p class="eyebrow" data-reveal>07 · troisième façon</p>
     <h2 class="h-display" data-reveal>Et avec MIA, <em>une étape entière</em>.</h2>
-    <p class="lede" data-reveal>Promptez une intention. MIA insère <span class="hi">une étape automatique</span> dans votre flow. Quand le flow l'atteint, elle <span class="hi">enchaîne les actions</span> toute seule, sans intervention humaine.</p>
+    <p class="lede" data-reveal>Promptez une intention. MIA insère <span class="hi">une étape automatique</span> dans votre dossier. Quand le dossier l'atteint, elle <span class="hi">enchaîne les actions</span> toute seule, sans intervention humaine.</p>
 
     <div class="auto-mia-stage" data-reveal id="autoMiaStage">
       <!-- Acte 1 : prompt utilisateur (style identique à §07 mia-gen) -->
@@ -708,8 +731,8 @@
             <svg viewBox="0 0 24 24" class="bk__bolt"><path d="M14 2 L4 14 L11 14 L10 22 L20 10 L13 10 L14 2 Z" fill="currentColor"/></svg>
           </span>
           <div class="auto-step-card__title">
-            <small>Étape automatique ajoutée au flow</small>
-            <b>Auto-clôture · Transaction</b>
+            <small>Étape automatique ajoutée au dossier</small>
+            <b>Auto-clôture · Vente de bien</b>
           </div>
           <span class="pill pill--orange">Brouillon</span>
         </header>
@@ -746,35 +769,35 @@
               <span class="auto-cascade__step">1</span>
               <div class="auto-cascade__body">
                 <p><b>Générer</b> le compromis pré-rempli</p>
-                <small><span class="bk bk--xs" style="--c: var(--b-legal)"><span>L</span></span> action rapide · brique <b>Legal</b></small>
+                <small><span class="bk bk--xs" style="--c: var(--b-legal)"><span>L</span></span> action rapide · outil <b>Legal</b></small>
               </div>
             </li>
             <li class="auto-cascade__item" style="--d: 200ms">
               <span class="auto-cascade__step">2</span>
               <div class="auto-cascade__body">
                 <p><b>Envoyer</b> en signature électronique aux parties</p>
-                <small><span class="bk bk--xs" style="--c: var(--b-legal)"><span>L</span></span> action rapide · brique <b>Legal</b></small>
+                <small><span class="bk bk--xs" style="--c: var(--b-legal)"><span>L</span></span> action rapide · outil <b>Legal</b></small>
               </div>
             </li>
             <li class="auto-cascade__item" style="--d: 400ms">
               <span class="auto-cascade__step">3</span>
               <div class="auto-cascade__body">
                 <p><b>Notifier</b> le notaire référent du dossier</p>
-                <small><span class="bk bk--xs" style="--c: var(--b-contact)"><span>C</span></span> action rapide · brique <b>Contact</b></small>
+                <small><span class="bk bk--xs" style="--c: var(--b-contact)"><span>C</span></span> action rapide · outil <b>Contact</b></small>
               </div>
             </li>
             <li class="auto-cascade__item" style="--d: 600ms">
               <span class="auto-cascade__step">4</span>
               <div class="auto-cascade__body">
                 <p><b>Générer</b> la facture d'honoraires</p>
-                <small><span class="bk bk--xs" style="--c: var(--b-finance)"><span>F</span></span> action rapide · brique <b>Finance</b></small>
+                <small><span class="bk bk--xs" style="--c: var(--b-finance)"><span>F</span></span> action rapide · outil <b>Finance</b></small>
               </div>
             </li>
             <li class="auto-cascade__item" style="--d: 800ms">
               <span class="auto-cascade__step">5</span>
               <div class="auto-cascade__body">
-                <p><b>Archiver</b> le flow</p>
-                <small>fin de l'étape · flow clôturé</small>
+                <p><b>Archiver</b> le dossier</p>
+                <small>fin de l'étape · dossier clôturé</small>
               </div>
             </li>
           </ol>
@@ -796,14 +819,14 @@
   <div class="container">
     <p class="eyebrow" data-reveal>Levier 1</p>
     <h2 class="h-display" data-reveal>Une plateforme.<br><em>Tous les métiers.</em></h2>
-    <p class="lede" data-reveal>Le moteur du HUB est <span class="hi">métier-agnostique</span>. Flow, Brique, Action rapide : le même socle absorbe tous les <span class="hi">métiers du groupe</span>.</p>
+    <p class="lede" data-reveal>Le moteur du HUB est <span class="hi">métier-agnostique</span>. Dossier, Outil, Action rapide : le même socle absorbe tous les <span class="hi">métiers du groupe</span>.</p>
 
     <div class="pieuvre" data-reveal>
       <svg class="pieuvre__orbit" aria-hidden="true" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round" stroke-dasharray="0.001 5.5" />
       </svg>
       <div class="pieuvre__core"><span>HUB</span></div>
-      <span class="pieuvre__arm pieuvre__arm--1" style="--c: var(--metier-immo)"><i class="metier-dot"></i><b>Immobilier</b><i class="arm-sub">Transaction · Gestion · Syndic</i></span>
+      <span class="pieuvre__arm pieuvre__arm--1" style="--c: var(--metier-immo)"><i class="metier-dot"></i><b>Immobilier</b><i class="arm-sub">Vente · Gestion · Syndic</i></span>
       <span class="pieuvre__arm pieuvre__arm--2" style="--c: var(--metier-notariat)"><i class="metier-dot"></i><b>Notariat</b><i class="arm-sub">Successions · Actes</i></span>
       <span class="pieuvre__arm pieuvre__arm--3" style="--c: var(--metier-rh)"><i class="metier-dot"></i><b>RH</b><i class="arm-sub">Recrutement · Paie</i></span>
       <span class="pieuvre__arm pieuvre__arm--4" style="--c: var(--metier-juridique)"><i class="metier-dot"></i><b>Juridique</b><i class="arm-sub">Contentieux · Compliance</i></span>
@@ -825,7 +848,7 @@
       <div class="uv2__header">
         <div class="uv2__header-text">
           <p class="eyebrow">Levier 2</p>
-          <h2 class="uv2__main-title">L'usine <em>M&amp;A</em>. <span class="hi">Du logiciel racheté</span> à la brique native.</h2>
+          <h2 class="uv2__main-title">L'usine <em>M&amp;A</em>. <span class="hi">Du logiciel racheté</span> à l'outil natif.</h2>
         </div>
         <div class="uv2__header-right">
           <span class="uv2__counter"><span id="uv2Cur">01</span><span class="uv2__sep"> / </span>05</span>
@@ -861,12 +884,12 @@
               <div class="uv2__slide-text">
                 <p class="uv2__step-label">02 — Audit</p>
                 <h3 class="uv2__slide-title">Cartographie</h3>
-                <p>Cartographie exhaustive : <span class="hi">modèles de données</span>, <span class="hi">fonctionnalités</span>, <span class="hi">flows imaginables</span>. On identifie ce qui devient brique, action rapide, ou template.</p>
+                <p>Cartographie exhaustive : <span class="hi">modèles de données</span>, <span class="hi">fonctionnalités</span>, <span class="hi">cas d'usage</span>. On identifie ce qui devient outil, action rapide, ou type de dossier.</p>
               </div>
               <div class="us-panel__viz us-viz--audit">
                 <div class="audit__layer"><span>Modèles de données</span></div>
                 <div class="audit__layer"><span>Liste exhaustive des fonctionnalités</span></div>
-                <div class="audit__layer"><span>Flows imaginables</span></div>
+                <div class="audit__layer"><span>Types de dossiers possibles</span></div>
               </div>
             </div>
           </article>
@@ -876,8 +899,8 @@
             <div class="uv2__slide-inner">
               <div class="uv2__slide-text">
                 <p class="uv2__step-label">03 — Transformation</p>
-                <h3 class="uv2__slide-title">Legacy → Brique native</h3>
-                <p>Le logiciel est <span class="hi">encapsulé</span> derrière une API uniforme et des <span class="hi">adapters MCP</span>. Il parle désormais la langue du HUB — et l'utilisateur voit une <span class="hi">brique native</span>, sans voir la couture.</p>
+                <h3 class="uv2__slide-title">Legacy → Outil natif</h3>
+                <p>Le logiciel est <span class="hi">encapsulé</span> derrière une API uniforme et des <span class="hi">adapters MCP</span>. Il parle désormais la langue du HUB — et l'utilisateur voit un <span class="hi">outil natif</span>, sans voir la couture.</p>
               </div>
               <div class="us-viz--transform">
                 <div class="tr__legacy">
@@ -888,7 +911,7 @@
                 <div class="tr__arrow">→</div>
                 <div class="tr__brick">
                   <span class="bk" style="--c: var(--b-syndic)"><span>S</span></span>
-                  <span class="tr__brick-label">Brique HUB</span>
+                  <span class="tr__brick-label">Outil HUB</span>
                 </div>
               </div>
             </div>
@@ -898,9 +921,9 @@
             <div class="uv2__slide-bg-num">04</div>
             <div class="uv2__slide-inner">
               <div class="uv2__slide-text">
-                <p class="uv2__step-label">04 — DataNova</p>
-                <h3 class="uv2__slide-title">Apprend &amp; enrichit</h3>
-                <p class="us-panel__big">Plus il y a de <span class="hi">briques qui rentrent</span>, plus DataNova devient riche. <em>Plus DataNova est riche, plus chaque brique devient puissante.</em></p>
+                <p class="uv2__step-label">04</p>
+                <h3 class="uv2__slide-title">DataNova <span style="font-weight:400; opacity:.7">apprend &amp; enrichit</span></h3>
+                <p class="us-panel__big">Plus il y a d'<span class="hi">outils qui rentrent</span>, plus DataNova devient riche. <em>Plus DataNova est riche, plus chaque outil devient puissant.</em></p>
               </div>
               <div class="us-panel__viz us-viz--dn">
                 <div class="dn__nebula"></div>
@@ -908,7 +931,7 @@
                 <div class="dn__flow dn__flow--in" aria-hidden="true"></div>
                 <div class="dn__flow dn__flow--out" aria-hidden="true"></div>
                 <span class="dn__label dn__label--in">Syndic → DataNova<small>nouvelles données</small></span>
-                <span class="dn__label dn__label--out">DataNova → toutes les briques<small>enrichissement</small></span>
+                <span class="dn__label dn__label--out">DataNova → tous les outils<small>enrichissement</small></span>
               </div>
             </div>
           </article>
@@ -919,7 +942,7 @@
               <div class="uv2__slide-text">
                 <p class="uv2__step-label">05 — Actions rapides</p>
                 <h3 class="uv2__slide-title">Cross-flows</h3>
-                <p>Toutes les actions rapides exposées par la brique <span class="hi">Syndic</span> deviennent <span class="hi">composables</span> dans n'importe quel template de flow — y compris ceux à venir.</p>
+                <p>Toutes les actions rapides exposées par l'outil <span class="hi">Syndic</span> deviennent <span class="hi">composables</span> dans n'importe quel type de dossier — y compris ceux à venir.</p>
               </div>
               <div class="us-panel__viz us-viz--qas">
                 <span class="qa-pill"><span class="bk bk--xs" style="--c: var(--b-syndic)"><span>S</span></span>Convoquer une AG</span>
@@ -955,7 +978,7 @@
   <div class="container">
     <p class="eyebrow" data-reveal>Levier 3</p>
     <h2 class="h-display" data-reveal>Un <em>écosystème</em>, pas un produit.</h2>
-    <p class="lede" data-reveal>Chaque nouvelle brique rejoint l'écosystème — et <span class="hi">tous les flows</span> peuvent immédiatement convoquer ses actions rapides. Les nouvelles arrivées <span class="hi">brillent plus fort</span> autour du flow.</p>
+    <p class="lede" data-reveal>Chaque nouvel outil rejoint l'écosystème — et <span class="hi">tous les dossiers</span> peuvent immédiatement convoquer ses actions rapides. Les nouvelles arrivées <span class="hi">brillent plus fort</span> autour du dossier.</p>
 
     <div class="network" data-reveal id="network">
       <!-- Brique icons orbiting around the central flow -->
@@ -964,13 +987,13 @@
       <!-- Central skeleton flow card — clairement un Flow avec ses étapes -->
       <div class="net__flow">
         <div class="net__flow-head">
-          <span class="dot dot--flow"></span>
+          <span class="dossier-icon dossier-icon--xs" style="--di-color:var(--metier-immo)" aria-hidden="true"><svg class="dossier-icon__folder"><use href="#icon-folder"/></svg></span>
           <span class="sk sk--title"></span>
           <span class="sk sk--pill"></span>
         </div>
 
         <!-- Stepper visible : 4 étapes numérotées reliées par une ligne -->
-        <ol class="net__stepper" aria-label="Étapes du flow (skeleton)">
+        <ol class="net__stepper" aria-label="Étapes du dossier (skeleton)">
           <li class="net__step is-done">
             <span class="net__step-num">1</span>
             <span class="sk sk--label"></span>
@@ -1003,8 +1026,8 @@
 <section id="reseau-actions" class="section">
   <div class="container">
     <p class="eyebrow" data-reveal>Levier 3 · suite</p>
-    <h2 class="h-display" data-reveal>Chaque brique débarque avec son <em>catalogue d'actions</em>.</h2>
-    <p class="lede" data-reveal>Une brique qui rejoint l'écosystème, ce ne sont pas juste des données — c'est un <span class="hi">arsenal d'actions rapides</span> immédiatement disponible pour <span class="hi">tous les flows</span>, présents et à venir.</p>
+    <h2 class="h-display" data-reveal>Chaque outil débarque avec son <em>catalogue d'actions</em>.</h2>
+    <p class="lede" data-reveal>Un outil qui rejoint l'écosystème, ce ne sont pas juste des données — c'est un <span class="hi">arsenal d'actions rapides</span> immédiatement disponible pour <span class="hi">tous les dossiers</span>, présents et à venir.</p>
   </div>
 
   <div class="qa-marquee" data-reveal>
@@ -1014,7 +1037,7 @@
   </div>
 
   <div class="container">
-    <p class="punchline" data-reveal>Ajouter une brique, c'est ajouter <em>des dizaines d'actions</em> à toute la plateforme.</p>
+    <p class="punchline" data-reveal>Ajouter un outil, c'est ajouter <em>des dizaines d'actions</em> à toute la plateforme.</p>
   </div>
 </section>
 

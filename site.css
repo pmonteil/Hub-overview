@@ -676,6 +676,39 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
 }
 .dot--flow { background: var(--orange); box-shadow: 0 0 8px var(--orange-glow); }
 .dot--tool { background: var(--text-3); box-shadow: none; }
+
+/* ============================================================
+   DOSSIER ICON — folder shape + type badge (Figma DS)
+   Usage: <span class="dossier-icon [dossier-icon--xs]" style="--di-color:#7491f7">
+            <svg class="dossier-icon__folder"><use href="#icon-folder"/></svg>
+            <span class="dossier-icon__badge">TR</span>
+          </span>
+   Colors: immo/bleu #7491f7 · copro/vert #44bdb2 · notaire/violet #a278fb
+           rh/orange #ff6136 · promo/rouge #ff6977
+   ============================================================ */
+.dossier-icon {
+  position: relative;
+  display: inline-flex;
+  width: 38px; height: 38px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.dossier-icon--xs {
+  width: 22px; height: 22px;
+}
+.dossier-icon__folder {
+  position: absolute;
+  top: 4px; left: 4px;
+  width: 24px; height: 21px;
+  overflow: visible;
+  /* Folder prend la couleur du type de dossier — fill subtil, stroke plus marqué */
+  --folder-fill:   color-mix(in srgb, var(--di-color) 14%, transparent);
+  --folder-stroke: color-mix(in srgb, var(--di-color) 58%, transparent);
+}
+.dossier-icon--xs .dossier-icon__folder {
+  top: 1px; left: 1px;
+  width: 15px; height: 13px;
+}
 .tm__plus {
   width: 28px; height: 28px; border-radius: 8px;
   display: grid; place-items: center;
@@ -744,7 +777,7 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
   left: 50%;
   transform: translateX(-50%) translateY(-8px) scale(0.96);
   transform-origin: top center;
-  width: min(680px, 96%);
+  width: min(860px, 96%);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
@@ -763,33 +796,59 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
   pointer-events: auto;
   transform: translateX(-50%) translateY(0) scale(1);
 }
+.pd__actions {
+  display: flex; flex-direction: column; gap: var(--sp-sm);
+  margin-bottom: var(--sp-lg);
+}
 .pd__cta {
   display: flex; align-items: center; gap: var(--sp-md);
   width: 100%; text-align: left;
-  padding: var(--sp-md) var(--sp-lg);
+  padding: var(--sp-sm) var(--sp-md);
   border-radius: var(--r-md);
-  background:
-    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
-    var(--ai-gradient) border-box;
-  border: 1.5px solid transparent;
-  margin-bottom: var(--sp-lg);
   color: var(--text);
   transition: transform 160ms var(--ease);
 }
 .pd__cta:hover { transform: translateY(-1px); }
+
+/* Bouton classique — Nouveau dossier */
+.pd__cta--classic {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.pd__cta--classic:hover { background: var(--surface-3); }
+
+/* Bouton AI — Générer avec MIA */
+.pd__cta--ai {
+  background:
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    var(--ai-gradient) border-box;
+  border: 1.5px solid transparent;
+}
+
 .pd__cta-icon {
-  width: 32px; height: 32px; border-radius: 8px;
+  width: 30px; height: 30px; border-radius: 7px;
   background: var(--ai-gradient); color: #fff;
   display: grid; place-items: center;
-  font-size: 18px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   flex-shrink: 0;
 }
-.pd__cta b { display: block; font-size: 14px; }
-.pd__cta small { display: block; color: var(--text-2); font-size: 12px; }
+.pd__cta-icon--plain {
+  background: var(--surface-3);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 20px;
+}
+.pd__cta b { display: block; font-size: 13px; }
+.pd__cta small { display: block; color: var(--text-2); font-size: 11px; margin-top: 1px; }
 
 .pd__cols {
-  display: grid; grid-template-columns: 1fr 1.2fr;
+  display: grid; grid-template-columns: 1fr 1.4fr;
   gap: var(--sp-lg);
+}
+.pd__list--tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 var(--sp-sm);
 }
 @media (max-width: 720px) { .pd__cols { grid-template-columns: 1fr; } }
 .pd__title {
@@ -828,9 +887,10 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
   opacity: 0.7;
 }
 .pd__list--grouped li:not(.pd__group) {
-  padding-left: 16px;
+  padding-left: 8px;
   font-size: 12.5px;
   color: var(--text-2);
+  gap: 6px;
 }
 /* Template badge + instance name dans les flow items */
 .pd__flow-tpl {
@@ -864,6 +924,13 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
   opacity: 1;
   transform: translateX(2px);
   color: var(--text);
+}
+/* Dossier icon hover : légère montée */
+.pd__list li .dossier-icon {
+  transition: transform 180ms var(--ease);
+}
+.pd__list li:hover .dossier-icon {
+  transform: translateY(-1px);
 }
 
 @media (max-width: 720px) {
@@ -1236,7 +1303,7 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(100% / 12);
+  left: var(--flow-line-offset, calc(100% / 12));
   width: 2px;
   transform: translateX(-1px);
   background-image: linear-gradient(180deg,
@@ -1251,7 +1318,7 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
 .flow-connector__cap {
   position: absolute;
   bottom: -3px;
-  left: calc(100% / 12);
+  left: var(--flow-line-offset, calc(100% / 12));
   transform: translateX(-50%);
   width: 8px; height: 8px;
   border-radius: 50%;
@@ -1627,11 +1694,21 @@ ul, ol { padding: 0; margin: 0; list-style: none; }
 .tpl-cat__head b { color: var(--text); font-weight: 600; }
 .tpl-cat__list { display: flex; flex-direction: column; gap: 4px; }
 .tpl-cat__list li {
-  display: flex; align-items: center; gap: var(--sp-sm);
-  padding: 8px 10px;
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 8px;
   background: var(--surface-2);
   border-radius: var(--r-sm);
-  font-size: 13px;
+  font-size: 12.5px;
+}
+/* Dossier icon dans le marquee : taille réduite à 20px */
+.tpl-cat__list .dossier-icon--xs {
+  width: 20px; height: 20px;
+}
+.tpl-cat__list .dossier-icon--xs .dossier-icon__folder {
+  width: 13px; height: 11px;
+}
+.tpl-cat__list .dossier-icon--xs .dossier-icon__badge {
+  width: 9px; height: 9px; font-size: 4px;
 }
 .tpl-cat__list li b { font-weight: 600; }
 .tpl-cat__list li small {
